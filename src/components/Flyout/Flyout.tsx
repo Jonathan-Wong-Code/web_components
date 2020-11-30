@@ -103,6 +103,7 @@ export const Flyout = ({
   transitionAnimation = '.2s all linear',
   shadowSizeOffset = 0,
 }: IFlyout): JSX.Element => {
+  console.log(isOpen);
   return (
     <Dialog isOpen={isOpen} onClose={onClose}>
       <FlyoutSlider 
@@ -111,9 +112,7 @@ export const Flyout = ({
         onClose={onClose}
         transitionAnimation={transitionAnimation}
         shadowSizeOffset={shadowSizeOffset}
-      >
-        {children}
-      </FlyoutSlider>
+      >{children}</FlyoutSlider>
     </Dialog>
   );
 };
