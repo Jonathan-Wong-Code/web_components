@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
 import {
@@ -51,12 +51,12 @@ export const FlyoutSlider = ({
   transitionAnimation, 
   shadowSizeOffset, 
 }: IFlyoutSlider):JSX.Element => {
+
+  const flyoutRef = useRef<HTMLDivElement>(null);
   // // Close Flyout by clicking outside of it.
   useEffect(() => {
     const handleCloseFlyout = (e: MouseEvent) => {
-      const isInsideDialog = '.fieldstone-dialog-container, .fieldstone-dialog-container *';
-
-      if (!(e.target as HTMLDivElement).matches(isInsideDialog)) {
+      if (!flyoutRef?.current?.contains((e.target as HTMLElement))) {
         onClose();
       }
     };
@@ -79,6 +79,7 @@ export const FlyoutSlider = ({
       data-testid='flyout-slide-container'
       transitionAnimation={transitionAnimation}
       shadowSizeOffset={shadowSizeOffset}
+      ref={flyoutRef}
     >
       {children}
     </FlyoutSlideContainer>
