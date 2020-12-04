@@ -39,7 +39,7 @@ const FlyInFromLeft: Story<IFlyout> = () => {
   return (
      // IMPORTANT. Use e.stopPropagation to prevent click event from bubbling up and closing the flyout
     <>
-      <button onClick={(e) => {e.stopPropagation(); openFlyout();}}>open me</button>
+      <button onClick={openFlyout}>open me</button>
       <Flyout
         isOpen={isOpen}
         onClose={() => closeFlyout()}
@@ -74,7 +74,7 @@ const FlyInFromRight: Story<IFlyout> = () => {
   return ( 
     // IMPORTANT. Use e.stopPropagation to prevent click event from bubbling up and closing the flyout
     <>
-      <button onClick={(e) => { e.stopPropagation(); openFlyout();}}>open me</button>
+      <button onClick={openFlyout}>open me</button>
       <Flyout
         isOpen={isOpen}
         onClose={closeFlyout}

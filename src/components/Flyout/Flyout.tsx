@@ -53,11 +53,13 @@ export const FlyoutSlider = ({
 }: IFlyoutSlider):JSX.Element => {
 
   const flyoutRef = useRef<HTMLDivElement>(null);
+  const clickedRef = useRef(false);
   // // Close Flyout by clicking outside of it.
   useEffect(() => {
     const handleCloseFlyout = (e: MouseEvent) => {
       if (!flyoutRef?.current?.contains((e.target as HTMLElement))) {
-        onClose();
+        clickedRef.current && onClose();
+        clickedRef.current = true;
       }
     };
 
@@ -104,7 +106,7 @@ export const Flyout = ({
   transitionAnimation = '.2s all linear',
   shadowSizeOffset = 0,
 }: IFlyout): JSX.Element => {
-  console.log(isOpen);
+
   return (
     <Dialog isOpen={isOpen} onClose={onClose}>
       <FlyoutSlider 
