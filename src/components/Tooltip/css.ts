@@ -1,45 +1,77 @@
 import styled from 'styled-components';
-import { Position, Coords } from './types';
+import { Position, Coords, Number } from './types';
 
-const tooltipWidth = 250;
-
-export const Container = styled.span`
+export const Container = styled.div<{ preferredPosition: Position }>`
   position: relative;
+
+  padding-left: ${({ preferredPosition }) =>
+    preferredPosition === 'left' ? '8px' : 0};
 `;
 
-const getContentPosition = (coords: Coords, preferredPosition?: Position):string => {
-  if(preferredPosition === 'above') {
-    return `top: ${coords.top}px; transform: translateY(-100%);`;
-  } else if(preferredPosition === 'left') {
+const getContentPosition = (
+  coords: Coords,
+  contentWidth: Number,
+  tooltipLabelWidth: Number,
+  preferredPosition?: Position
+): string => {
+  // Above
+  if (preferredPosition === 'above') {
     return `
       top: ${coords.top}px; 
-      left: ${coords.left - tooltipWidth}px;
+      transform: translateY(-100%); 
+      padding-bottom: 8px;
     `;
-  } else if(preferredPosition === 'right') {
+    // Left
+  } else if (preferredPosition === 'left' && coords.left && contentWidth) {
     return `
       top: ${coords.top}px; 
-      right: ${coords.left + tooltipWidth}px;
+      left: ${coords.left - contentWidth}px;
+    `;
+    // Right
+  } else if (
+    preferredPosition === 'right' &&
+    coords.left &&
+    tooltipLabelWidth
+  ) {
+    return `
+      top: ${coords.top}px; 
+      left: ${coords.left + tooltipLabelWidth}px;
+      padding-left: 8px;
     `;
   }
-
-  return `top: ${coords.bottom}px;`;
+  // Below
+  return `
+    top: ${coords.bottom}px; 
+    padding-top: 8px;
+  `;
 };
 
-export const Content = styled.div<{preferredPosition?: Position, coords: Coords}>`
+export const Content = styled.div<{
+  preferredPosition?: Position;
+  coords: Coords;
+  contentWidth: number | undefined;
+  tooltipLabelWidth: Number;
+}>`
+
+  *, & * {
+    box-sizing: border-box;
+  }
+
   background: transparent;
   position: absolute;
 
-  left: ${({ preferredPosition, coords}) => 
-    preferredPosition === 'above' || preferredPosition === 'below' ? `${coords.left}px` : null};
+  left: ${({ preferredPosition, coords }) =>
+    preferredPosition === 'above' || preferredPosition === 'below'
+      ? `${coords.left}px`
+      : null};
 
-  ${({ coords, preferredPosition }) => getContentPosition(coords, preferredPosition)}
+  ${({ coords, preferredPosition, contentWidth, tooltipLabelWidth }) =>
+    getContentPosition(
+      coords,
+      contentWidth,
+      tooltipLabelWidth,
+      preferredPosition
+    )}
+
   border-radius: ${({ theme }) => theme.borderRadius};
-  width: ${tooltipWidth}px;
-  padding: ${({ preferredPosition }) => preferredPosition === 'left' || preferredPosition ==='right' ? '0' : '8px 0'};
-  margin-
 `;
-
-export const P = styled.p`
-  margin: 0;
-  padding: 16px;
-`

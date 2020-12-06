@@ -1,25 +1,34 @@
 
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Container, Content } from './css';
 import Portal from '../Portal/Portal';
-import { Coords, Position } from './types';
+import { Coords, Position, Number } from './types';
 import { useTooltip } from './TooltipContainer';
 
 interface ITooltipContent {
   preferredPosition?: Position
   closeTooltip: () => void;
   coords: Coords;
-  tooltipContent: React.ReactNode;
-
+  tooltipContent: React.ReactElement;
+  tooltipLabelWidth: Number;
 }
 
 const TooltipContent =
   ({
+    tooltipLabelWidth,
     tooltipContent,
     preferredPosition = 'below',
     closeTooltip,
     coords
   }: ITooltipContent): JSX.Element => {
+    const [width, setWidth] = useState<Number>(0)
+    const childrenRef = useRef<HTMLDivElement>(null)
+
+    React.useLayoutEffect(() => {
+      // Grab the width of the tooltip content being passed in as tooltipContent
+      setWidth(childrenRef?.current?.clientWidth)
+    }, [])
+
     return (
       <Content
         preferredPosition={preferredPosition}
@@ -28,8 +37,14 @@ const TooltipContent =
         role='tooltip'
         aria-hidden={true}
         data-testid='tooltip-content-container'
+        contentWidth={width}
+        tooltipLabelWidth={tooltipLabelWidth}
       >
-        {tooltipContent}
+
+        {React.cloneElement(tooltipContent, {
+          id: 'tooltip-content',
+          ref: childrenRef
+        })}
       </Content>
     );
   };
@@ -37,7 +52,7 @@ const TooltipContent =
 interface ITooltipComponent {
   children: React.ReactElement;
   preferredPosition?: Position;
-  tooltipContent: React.ReactNode;
+  tooltipContent: React.ReactElement;
 }
 
 const TooltipComponent =
@@ -47,18 +62,23 @@ const TooltipComponent =
     tooltipContent,
   }: ITooltipComponent): JSX.Element => {
     const { showTooltip, openTooltip, closeTooltip, coords, setCoords } = useTooltip();
-    const tooltipContainerRef = useRef<HTMLElement>(null);
+    const [childWidth, setChildWidth] = useState<Number>()
+    const tooltipContainerRef = useRef<HTMLDivElement>(null);
+    const childrenRef = useRef<HTMLElement>(null);
+
+    React.useLayoutEffect(() => {
+      // Grab the width of the tooltip children AKA the elements being labelled.
+      setChildWidth(childrenRef?.current?.clientWidth);
+    }, [])
 
     const handleOpenTooltip = () => {
       const rect = tooltipContainerRef.current?.getBoundingClientRect();
-      console.log(rect);
+
       setCoords({
         top: rect && rect.y + window.scrollY,
         left: rect && rect.x,
         bottom: rect && rect.bottom + window.scrollY,
         right: rect && rect.right,
-        width: rect && rect.width,
-        height: rect && rect.height,
       });
 
       openTooltip();
@@ -68,8 +88,9 @@ const TooltipComponent =
       <Container
         onMouseLeave={closeTooltip}
         onMouseOver={handleOpenTooltip}
-        ref={tooltipContainerRef} 
+        ref={tooltipContainerRef}
         className='container'
+        preferredPosition={preferredPosition}
       >
         {
           showTooltip &&
@@ -79,6 +100,7 @@ const TooltipComponent =
               closeTooltip={closeTooltip}
               coords={coords}
               tooltipContent={tooltipContent}
+              tooltipLabelWidth={childWidth}
             />
           </Portal>
         }
@@ -86,7 +108,8 @@ const TooltipComponent =
         {React.cloneElement(children, {
           onFocus: () => handleOpenTooltip(),
           onBlur: () => closeTooltip(),
-          'aria-describedby': 'tooltip-content'
+          'aria-describedby': 'tooltip-content',
+          ref: childrenRef
         })}
       </Container>
     );

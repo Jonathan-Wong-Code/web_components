@@ -8,19 +8,19 @@ export interface ITooltip {
   children: React.ReactElement;
   content: string;
   preferredPosition?: Position;
-  tooltipContent: React.ReactNode;
+  tooltipContent: React.ReactElement;
 }
 
-const ToolTip = 
-  ({ 
-    children, 
+const ToolTip =
+  ({
+    children,
     preferredPosition = 'below',
     tooltipContent
-  }: ITooltip ): JSX.Element => {
+  }: ITooltip): JSX.Element => {
     return (
       <TooltipContainer>
-        <TooltipComponent 
-          preferredPosition={preferredPosition} 
+        <TooltipComponent
+          preferredPosition={preferredPosition}
           tooltipContent={tooltipContent}
         >
           {children}
