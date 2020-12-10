@@ -1,51 +1,43 @@
+
 import React, {
   createContext,
   useState,
   useEffect,
   useCallback,
   useMemo,
+  useContext,
 } from 'react';
 
-interface ISingleAccordionOpenProvider {
-  children: React.ReactElement[];
-}
+import { AccordionGroupContext } from './AccordionGroupProvider';
 
-export const SingleAccordionOpenProvider = ({
-  children,
-}: ISingleAccordionOpenProvider): JSX.Element => {
-  const [activeAccordion, setActiveAccordion] = useState<number | undefined>(
-    -1
-  );
-
-  return <>
-    {
-      React.Children.map(children, child =>
-        React.cloneElement(child, { activeAccordion, setActiveAccordion }),
-      )}
-  </>
-};
 
 // ** Accordion Container ** //
-
 interface Accordion {
   isOpen: boolean;
   toggleAccordion: () => void;
+  index: number | undefined,
+  baseId: string,
 }
 
 export const AccordionContext = createContext<Accordion>({
   isOpen: false,
   toggleAccordion: () => { },
+  index: -1,
+  baseId: '',
 });
 
 interface IAccordionContainer {
   children: React.ReactNode;
-  isSingleOpen?: boolean;
-  index?: number;
-  activeAccordion?: number;
-  setActiveAccordion?: (index: number | undefined) => void;
+  index: number;
+  baseId: string;
 }
 
-export const AccordionContainer = ({ children, setActiveAccordion, index, isSingleOpen = false, activeAccordion }: IAccordionContainer) => {
+export const AccordionContainer = ({
+  children,
+  index,
+  baseId,
+}: IAccordionContainer) => {
+  const { setActiveAccordion, activeAccordion, isSingleOpen } = useContext(AccordionGroupContext)
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   useEffect(() => {
@@ -61,9 +53,11 @@ export const AccordionContainer = ({ children, setActiveAccordion, index, isSing
     }
   }, [index, setActiveAccordion, isSingleOpen]);
 
-  const value = useMemo(() => ({ isOpen, toggleAccordion }), [
+  const value = useMemo(() => ({ isOpen, toggleAccordion, index, baseId, }), [
     isOpen,
     toggleAccordion,
+    index,
+    baseId,
   ]);
 
   return (

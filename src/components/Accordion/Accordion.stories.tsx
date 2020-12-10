@@ -1,16 +1,27 @@
 import React from 'react';
 import { Meta } from '@storybook/react/types-6-0';
-import { AccordionBody, AccordionButton } from './Accordion';
-import { AccordionContainer, SingleAccordionOpenProvider } from './contexts';
-
+import { AccordionBody, AccordionButton, AccordionTitle } from './Accordion';
+import { AccordionContainerProvider } from './AccordionGroupProvider';
+import { AccordionContainer } from './AccordionContainerProvider';
 import { action } from '@storybook/addon-actions';
-
+import styled from 'styled-components';
 export default {
   title: 'Behaviour/Accordion',
   component: AccordionContainer,
 } as Meta;
 
+const Button = styled.button`
+  width: 100%; 
+  background: none; 
+  border: 1px solid black;
+  padding: 16px 20px;
+  font-size: 16px;
+  outline: none;
+`
+
 export const Accordion = () => {
+
+  // Follows all the WCAG guidelines and suggestions via https://www.w3.org/TR/wai-aria-practices-1.1/examples/accordion/accordion.html. As such feel free to put outline: none on button if you plan on using the border styles.
 
   const content = [{
     buttonLabel: 'hello world',
@@ -24,25 +35,35 @@ export const Accordion = () => {
 
   return (
     <>
-      {content.map(content => (
-        <AccordionContainer>
-          <AccordionButton onOpenClick={action('open')} onCloseClick={action('close')}>
-            <button style={{ width: '100%' }}>{content.buttonLabel}</button>
-          </AccordionButton>
-          <AccordionBody>
-            <div style={{ background: 'red', padding: '16px' }}>
-              <h1>{content.title}</h1>
-              <p>{content.description}</p>
-            </div>
-          </AccordionBody>
-        </AccordionContainer>
-      ))}
+      <AccordionContainerProvider>
+        {content.map((content, index) => (
+          <div style={{ marginBottom: '16px' }} key={index}>
+            <AccordionContainer index={index} baseId='base-accordion-id'>
+              <AccordionButton onOpenClick={action('open')} onCloseClick={action('close')}>
+                <Button>
+                  <AccordionTitle>
+                    {content.buttonLabel}
+                  </AccordionTitle>
+                </Button>
+              </AccordionButton>
+              <AccordionBody>
+                <div style={{ background: 'red', padding: '16px' }}>
+                  <h1>{content.title}</h1>
+                  <p>{content.description}</p>
+                </div>
+              </AccordionBody>
+            </AccordionContainer>
+          </div>
+        ))}
+      </AccordionContainerProvider>
     </>
   )
 }
 
 export const SingleOpenedAccordion = () => {
 
+  // Follows all the WCAG guidelines and suggestions via https://www.w3.org/TR/wai-aria-practices-1.1/examples/accordion/accordion.html. As such feel free to put outline: none on button if you plan on using the border styles.
+
   const content = [{
     buttonLabel: 'hello world',
     title: 'title 1',
@@ -55,11 +76,15 @@ export const SingleOpenedAccordion = () => {
 
   return (
     <>
-      <SingleAccordionOpenProvider>
+      <AccordionContainerProvider isSingleOpen focusBorderColour='red'>
         {content.map((content, i) => (
-          <AccordionContainer isSingleOpen index={i} key={content.title}>
+          <AccordionContainer index={i} key={content.title} baseId='unique-id'>
             <AccordionButton onOpenClick={action('open')} onCloseClick={action('close')}>
-              <button style={{ width: '100%' }}>{content.buttonLabel}</button>
+              <Button>
+                <AccordionTitle>
+                  {content.buttonLabel}
+                </AccordionTitle>
+              </Button>
             </AccordionButton>
             <AccordionBody>
               <div style={{ background: 'red', padding: '16px' }}>
@@ -69,7 +94,7 @@ export const SingleOpenedAccordion = () => {
             </AccordionBody>
           </AccordionContainer>
         ))}
-      </SingleAccordionOpenProvider>
+      </AccordionContainerProvider>
     </>
   )
 }
