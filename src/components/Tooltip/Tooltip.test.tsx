@@ -5,7 +5,7 @@ import Tooltip from './Tooltip';
 import userEvent from '@testing-library/user-event';
 
 beforeEach(() => jest.clearAllMocks());
-const tooltipContent = <p>Hover over me</p>
+const tooltipContent = <p>This is tooltip content</p>
 
 describe('<Tooltip />', () => {
   it('renders the tooltip when the tooltip child is hovered and closes on mouseout', () => {
@@ -16,7 +16,7 @@ describe('<Tooltip />', () => {
     );
 
     const button = screen.getByRole('button', { name: /hover over me/i });
-    fireEvent.mouseOver(button); 
+    fireEvent.mouseOver(button);
     expect(screen.getByText('This is tooltip content')).toBeInTheDocument();
 
     fireEvent.mouseLeave(button);

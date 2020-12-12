@@ -43,33 +43,34 @@ const FlyoutSlideContainer = styled.div<{
   }
 `;
 
-export const FlyoutSlider = ({ 
-  children, 
-  slideFrom, 
-  isOpen, 
-  onClose, 
-  transitionAnimation, 
-  shadowSizeOffset, 
-}: IFlyoutSlider):JSX.Element => {
+export const FlyoutSlider = ({
+  children,
+  slideFrom,
+  isOpen,
+  onClose,
+  transitionAnimation,
+  shadowSizeOffset,
+}: IFlyoutSlider): JSX.Element => {
 
   const flyoutRef = useRef<HTMLDivElement>(null);
-  const clickedRef = useRef(false);
   // // Close Flyout by clicking outside of it.
   useEffect(() => {
     const handleCloseFlyout = (e: MouseEvent) => {
+
       if (!flyoutRef?.current?.contains((e.target as HTMLElement))) {
-        clickedRef.current && onClose();
-        clickedRef.current = true;
+        onClose();
       }
     };
 
     if (isOpen) {
-      document.body.addEventListener('click', handleCloseFlyout);
+      setTimeout(() => {
+        window.addEventListener('click', handleCloseFlyout);
+      }, 0)
     }
 
     return () => {
       if (isOpen) {
-        document.body.removeEventListener('click', handleCloseFlyout);
+        window.removeEventListener('click', handleCloseFlyout);
       }
     };
   }, [isOpen, onClose]);
@@ -109,13 +110,15 @@ export const Flyout = ({
 
   return (
     <Dialog isOpen={isOpen} onClose={onClose}>
-      <FlyoutSlider 
-        slideFrom={slideFrom} 
-        isOpen={isOpen} 
+      <FlyoutSlider
+        slideFrom={slideFrom}
+        isOpen={isOpen}
         onClose={onClose}
         transitionAnimation={transitionAnimation}
         shadowSizeOffset={shadowSizeOffset}
-      >{children}</FlyoutSlider>
+      >
+        {children}
+      </FlyoutSlider>
     </Dialog>
   );
 };

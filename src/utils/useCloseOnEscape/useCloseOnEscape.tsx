@@ -4,7 +4,6 @@ export const useCloseOnEscape = (isOpen: boolean, closeElement: () => void): voi
   useEffect(() => {
     if (isOpen) {
       const handleKeyPress = (e: KeyboardEvent) => {
-        console.log('hello?')
         if (e.key === 'Escape') {
           closeElement();
         }
