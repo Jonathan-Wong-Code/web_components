@@ -6,7 +6,6 @@ import { Position } from './types';
 
 export interface ITooltip {
   children: React.ReactElement;
-  content: string;
   preferredPosition?: Position;
   tooltipContent: React.ReactElement;
 }

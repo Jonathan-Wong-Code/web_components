@@ -10,7 +10,7 @@ const tooltipContent = <p>This is tooltip content</p>
 describe('<Tooltip />', () => {
   it('renders the tooltip when the tooltip child is hovered and closes on mouseout', () => {
     render(
-      <Tooltip content='This is tooltip content' tooltipContent={tooltipContent}>
+      <Tooltip tooltipContent={tooltipContent}>
         <button>Hover over me</button>
       </Tooltip>
     );
@@ -25,7 +25,7 @@ describe('<Tooltip />', () => {
 
   it('renders the tooltip when hovered over and closes when escape is pressed', () => {
     const { container } = render(
-      <Tooltip content='This is tooltip content' tooltipContent={tooltipContent}>
+      <Tooltip tooltipContent={tooltipContent}>
         <button>Hover over me</button>
       </Tooltip>
     );
@@ -41,7 +41,7 @@ describe('<Tooltip />', () => {
   it('renders the tool tip when it is given keyboard focus and closes on blur', () => {
     render(
       <div>
-        <Tooltip content='This is tooltip content' tooltipContent={tooltipContent}>
+        <Tooltip tooltipContent={tooltipContent}>
           <button>Hover over me</button>
         </Tooltip>
         <button>second focus element</button>
@@ -59,7 +59,7 @@ describe('<Tooltip />', () => {
 
   it('should render with the above styles', () => {
     render(
-      <Tooltip content='This is tooltip content' preferredPosition='above' tooltipContent={<p>hello</p>}>
+      <Tooltip preferredPosition='above' tooltipContent={<p>hello</p>}>
         <button>Hover over me</button>
       </Tooltip>
     );
@@ -68,11 +68,13 @@ describe('<Tooltip />', () => {
 
     const tooltipContent = screen.getByTestId('tooltip-content-container');
     expect(tooltipContent).toHaveStyleRule('transform', 'translateY(-100%)');
+    expect(tooltipContent).toHaveStyleRule('padding-bottom', '8px');
+
   });
 
   it('should render with the below styles', () => {
     render(
-      <Tooltip content='This is tooltip content' preferredPosition='below' tooltipContent={<p>hello</p>}>
+      <Tooltip preferredPosition='below' tooltipContent={<p>hello</p>}>
         <button>Hover over me</button>
       </Tooltip>
     );
@@ -81,5 +83,33 @@ describe('<Tooltip />', () => {
 
     const tooltipContent = screen.getByTestId('tooltip-content-container');
     expect(tooltipContent).not.toHaveStyleRule('transform', 'translateY(-100%)');
+    expect(tooltipContent).toHaveStyleRule('padding-top', '8px');
+
+  });
+
+  it('should render with the right direction styles', () => {
+    render(
+      <Tooltip preferredPosition='right' tooltipContent={<p>hello</p>}>
+        <button>Hover over me</button>
+      </Tooltip>
+    );
+    const button = screen.getByRole('button', { name: /hover over me/i });
+    fireEvent.mouseOver(button);
+
+    const tooltipContent = screen.getByTestId('tooltip-content-container');
+    expect(tooltipContent).toHaveStyleRule('padding-left', '8px');
+  });
+
+  it('should render with the left direction styles', () => {
+    render(
+      <Tooltip preferredPosition='left' tooltipContent={<p>hello</p>}>
+        <button>Hover over me</button>
+      </Tooltip>
+    );
+    const button = screen.getByRole('button', { name: /hover over me/i });
+    fireEvent.mouseOver(button);
+
+    const tooltipContent = screen.getByTestId('tooltip-container');
+    expect(tooltipContent).toHaveStyleRule('padding-left', '8px');
   });
 });

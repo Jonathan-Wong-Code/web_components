@@ -86,6 +86,7 @@ const TooltipComponent =
 
     return (
       <Container
+        data-testid='tooltip-container'
         onMouseLeave={closeTooltip}
         onMouseOver={handleOpenTooltip}
         ref={tooltipContainerRef}

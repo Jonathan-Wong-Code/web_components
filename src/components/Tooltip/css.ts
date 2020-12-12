@@ -28,14 +28,12 @@ const getContentPosition = (
       left: ${coords.left - contentWidth}px;
     `;
     // Right
-  } else if (
-    preferredPosition === 'right' &&
-    coords.left &&
-    tooltipLabelWidth
-  ) {
+  } else if (preferredPosition === 'right') {
     return `
       top: ${coords.top}px; 
-      left: ${coords.left + tooltipLabelWidth}px;
+      left: ${
+        coords.left && tooltipLabelWidth && coords.left + tooltipLabelWidth
+      }px;
       padding-left: 8px;
     `;
   }

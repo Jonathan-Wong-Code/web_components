@@ -25,7 +25,7 @@ const TooltipContext = createContext<ITooltipContext>({
   closeTooltip: () => null
 });
 
-export const useTooltip = ():ITooltipContext => {
+export const useTooltip = (): ITooltipContext => {
   const context = useContext(TooltipContext);
   if (!context) {
     throw new Error('Must use tooltip components inside the tooltip container');
@@ -50,8 +50,9 @@ export const TooltipContainer = ({ children }: ITooltipContainer): JSX.Element =
 
   const openTooltip = useCallback(() => setShowTooltip(true), []);
   const closeTooltip = useCallback(() => setShowTooltip(false), []);
+  const showTooltipValue = useMemo(() => showTooltip, [showTooltip])
 
-  useCloseOnEscape(showTooltip, closeTooltip);
+  useCloseOnEscape(showTooltipValue, closeTooltip);
 
   const value = useMemo(() =>
     ({ showTooltip, openTooltip, closeTooltip, coords, setCoords }), [showTooltip, closeTooltip, openTooltip, coords]);
