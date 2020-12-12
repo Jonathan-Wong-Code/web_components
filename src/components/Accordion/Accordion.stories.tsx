@@ -26,11 +26,13 @@ export const Accordion = () => {
   const content = [{
     buttonLabel: 'hello world',
     title: 'title 1',
-    description: 'This is decription 1'
+    description: 'This is decription 1',
+    link: 'go to google',
   }, {
     buttonLabel: 'hello world 2',
     title: 'title 2',
-    description: 'This is decription 2'
+    description: 'This is decription 2',
+    link: 'go to google'
   }]
 
   return (
@@ -50,6 +52,7 @@ export const Accordion = () => {
                 <div style={{ background: 'red', padding: '16px' }}>
                   <h1>{content.title}</h1>
                   <p>{content.description}</p>
+                  <a href="https://www.google.com">{content.link}</a>
                 </div>
               </AccordionBody>
             </AccordionContainer>

@@ -12,8 +12,12 @@ interface IAccordionButton {
 }
 
 const ButtonContainerDiv = styled.div<{ isOpen: boolean, backgroundFocusColour: string }>`
-  & button {
-    background: ${({ backgroundFocusColour, isOpen }) => isOpen && backgroundFocusColour};
+  & button:focus {
+    background: ${({ backgroundFocusColour }) => backgroundFocusColour};
+
+    .accordion-button-title {
+      border: 2px solid blue;
+    }
   }
 `;
 
@@ -86,7 +90,6 @@ interface IAccordionTitle {
 }
 
 const Title = styled.span<{ isOpen: boolean, titleFocusColour: string }>`
-  border: ${({ isOpen, titleFocusColour }) => isOpen ? `2px solid ${titleFocusColour}` : null};
   border-radius: 6px;
   padding: 8px;
 `
@@ -95,7 +98,13 @@ export const AccordionTitle = ({ children, titleFocusColour = 'blue' }: IAccordi
   const { isOpen, baseId, index } = useContext(AccordionContext);
 
   return (
-    <Title titleFocusColour={titleFocusColour} isOpen={isOpen} id={`accordion-button-${baseId}-${index}`}>
+    <Title
+      titleFocusColour={titleFocusColour}
+      isOpen={isOpen}
+      id={`accordion-button-${baseId}-${index}`}
+      className='accordion-button-title'
+    >
+
       {children}
     </Title>
   )

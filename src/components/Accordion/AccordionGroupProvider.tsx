@@ -46,7 +46,7 @@ export const AccordionContainerProvider = ({
   }), [activeAccordion, setActiveAccordion, setInsideAccordionGroup, isSingleOpen]);
 
   return (
-    <div style={{ border: insideAccordionGroup ? `1px solid ${focusBorderColour}` : 'none' }}>
+    <div style={{ border: insideAccordionGroup ? `1px solid ${focusBorderColour}` : '1px solid transparent' }}>
       {<AccordionGroupContext.Provider value={value}>{children}</AccordionGroupContext.Provider>}
     </div>
   )
