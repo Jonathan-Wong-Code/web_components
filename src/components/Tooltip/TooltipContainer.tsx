@@ -1,5 +1,5 @@
 import React, { useState, useCallback, createContext, useContext, useMemo } from 'react';
-import { useCloseOnEscape } from '../../utils/useCloseOnEscape/useCloseOnEscape';
+import { useCloseOnEscape } from '../../hooks/useCloseOnEscape/useCloseOnEscape';
 import { Coords } from './types';
 
 /*************************CONTEXT**********************************/

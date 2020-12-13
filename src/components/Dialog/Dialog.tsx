@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useCloseOnEscape } from '../../utils/useCloseOnEscape/useCloseOnEscape';
+import { useCloseOnEscape } from '../../hooks/useCloseOnEscape/useCloseOnEscape';
+import { FOCUSABLE_ELEMENT_SELECTORS } from '../../utils/constants';
 export interface IDialog {
   children: React.ReactNode;
   onClose: () => void;
@@ -38,10 +39,6 @@ export const Dialog = ({ children, onClose, isOpen }: IDialog): JSX.Element => {
   // **** TABBING KEYBOARD LOGIC **** //
   useEffect(() => {
     // separate array items.
-    const FOCUSABLE_ELEMENT_SELECTORS = [
-      'a', 'a[href]', 'area[href]', 'input:not([disabled])', 'select:not([disabled])', 'textarea:not([disabled])', 'button:not([disabled])', 'iframe', 'object', '[tabindex="0"]', '[contenteditable]'
-    ].join(', ');
-
     let focusableElements: HTMLElement[];
 
     const node = nodeRef.current;

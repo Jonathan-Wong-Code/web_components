@@ -2,7 +2,7 @@ import React, { useContext, useRef, } from 'react';
 import styled from 'styled-components';
 import { AccordionContext } from './AccordionContainerProvider'
 import { AccordionGroupContext } from './AccordionGroupProvider';
-
+import useToggleFocusableElements from '../../hooks/useToggleFocusableElements/useToggleFocusElements';
 // ** ACCORDION HEADER/BUTTON ** //
 interface IAccordionButton {
   children: React.ReactElement;
@@ -29,6 +29,7 @@ export const AccordionButton = ({
 }: IAccordionButton) => {
   const { toggleAccordion, isOpen, index, baseId } = useContext(AccordionContext);
   const { setInsideAccordionGroup } = useContext(AccordionGroupContext);
+
 
   return (
     <ButtonContainerDiv
@@ -66,6 +67,7 @@ interface IAccordionBody {
 export const AccordionBody = ({ children }: IAccordionBody) => {
   const contentRef = useRef<HTMLDivElement>(null);
   const { isOpen, index, baseId } = useContext(AccordionContext);
+  useToggleFocusableElements(isOpen, contentRef)
 
   return (
     <AccordionContent
