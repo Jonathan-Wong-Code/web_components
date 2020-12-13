@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useCloseOnEscape } from '../../hooks/useCloseOnEscape/useCloseOnEscape';
 import { FOCUSABLE_ELEMENT_SELECTORS } from '../../utils/constants';
+import useToggleFocusableElements from '../../hooks/useToggleFocusableElements/useToggleFocusElements';
 export interface IDialog {
   children: React.ReactNode;
   onClose: () => void;
@@ -40,21 +41,6 @@ export const Dialog = ({ children, onClose, isOpen }: IDialog): JSX.Element => {
   useEffect(() => {
     // separate array items.
     let focusableElements: HTMLElement[];
-
-    const node = nodeRef.current;
-
-    if (!isOpen) {
-      // Turn off tabbing if dialog elements are off screen
-      if (node) {
-        focusableElements = Array.from(
-          node.querySelectorAll(FOCUSABLE_ELEMENT_SELECTORS)
-        );
-
-        focusableElements.forEach((element) =>
-          element.setAttribute('tabindex', '-1')
-        );
-      }
-    }
 
     if (isOpen) {
       // Focus capture inside of the Dialog.
@@ -99,10 +85,6 @@ export const Dialog = ({ children, onClose, isOpen }: IDialog): JSX.Element => {
         node.querySelectorAll(FOCUSABLE_ELEMENT_SELECTORS)
       );
 
-      focusableElements.forEach((element) =>
-        element.setAttribute('tabindex', '0')
-      );
-
       // Focus inner dialog when it is opened.
       if (typeof window !== 'undefined' && focusableElements[0]) {
         const firstInput = focusableElements.find(
@@ -120,6 +102,7 @@ export const Dialog = ({ children, onClose, isOpen }: IDialog): JSX.Element => {
 
   // Close dialog when escape key is pressed.
   useCloseOnEscape(isOpen, closeDialog);
+  useToggleFocusableElements(isOpen, nodeRef);
 
   return (
     <div

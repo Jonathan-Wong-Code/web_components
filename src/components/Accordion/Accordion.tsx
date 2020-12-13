@@ -27,7 +27,7 @@ export const AccordionButton = ({
   onCloseClick,
   backgroundFocusColour = '#E1EDFE',
 }: IAccordionButton) => {
-  const { toggleAccordion, isOpen, index, baseId } = useContext(AccordionContext);
+  const { toggleAccordionOpen, isOpen, index, baseId } = useContext(AccordionContext);
   const { setInsideAccordionGroup } = useContext(AccordionGroupContext);
 
 
@@ -42,7 +42,7 @@ export const AccordionButton = ({
             onCloseClick && onCloseClick()
             :
             onOpenClick && onOpenClick();
-          toggleAccordion();
+          toggleAccordionOpen();
         },
         onFocus: () => setInsideAccordionGroup(true),
         onBlur: () => setInsideAccordionGroup(false),

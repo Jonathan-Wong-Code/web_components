@@ -14,14 +14,14 @@ import { AccordionGroupContext } from './AccordionGroupProvider';
 // ** Accordion Container ** //
 interface Accordion {
   isOpen: boolean;
-  toggleAccordion: () => void;
+  toggleAccordionOpen: () => void;
   index: number | undefined,
   baseId: string,
 }
 
 export const AccordionContext = createContext<Accordion>({
   isOpen: false,
-  toggleAccordion: () => { },
+  toggleAccordionOpen: () => { },
   index: -1,
   baseId: '',
 });
@@ -42,20 +42,22 @@ export const AccordionContainer = ({
 
   useEffect(() => {
     if (isSingleOpen) {
+      // If only one allowed open set to open if the current accordion equals the current active accordion.
       setIsOpen(index === activeAccordion);
     }
   }, [index, activeAccordion, isSingleOpen]);
 
-  const toggleAccordion = useCallback(() => {
+  const toggleAccordionOpen = useCallback(() => {
     setIsOpen((prevState) => !prevState);
+    // Set the active accordion if only one allowed open.
     if (isSingleOpen) {
       setActiveAccordion && setActiveAccordion(index);
     }
   }, [index, setActiveAccordion, isSingleOpen]);
 
-  const value = useMemo(() => ({ isOpen, toggleAccordion, index, baseId, }), [
+  const value = useMemo(() => ({ isOpen, toggleAccordionOpen, index, baseId, }), [
     isOpen,
-    toggleAccordion,
+    toggleAccordionOpen,
     index,
     baseId,
   ]);
