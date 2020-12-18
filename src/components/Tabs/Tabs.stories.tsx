@@ -27,17 +27,15 @@ export const Default = () => {
   border-color: ${({ isOpen }) => isOpen ? 'black black white' : 'transparent'};
   margin-bottom: -2px;
   position: relative;
-
-   
 `;
 
 
   return (
   <div style={{ width: 600}}>
-    <TabsContainer numberOfTabs={2}>
+    <TabsContainer numberOfTabs={2} id='baseid'>
       {/* Use Composition to add styles around the nav and body */}
       <div style={{ borderBottom: '1px solid black'}}>
-        <Tabs>
+          <Tabs tabgroupAriaLabel='Name of Tabgroup'>
           <Tab index={0}>
             <StyledButton>Home</StyledButton>
           </Tab>

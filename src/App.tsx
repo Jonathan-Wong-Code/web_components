@@ -1,24 +1,35 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Tooltip from '../src/components/Tooltip/Tooltip';
+import { Tab, TabsContainer, TabPanel, Tabs } from './components/Tabs/Tabs';
 function App() {
 
   return (
     <>
-      <div style={{ width: 300, height: 1000, display: 'flex', alignItems: 'center' }}>
-        <div style={{ marginLeft: '100px' }}>
-          <Tooltip tooltipContent={
-            <div>
-              <p style={{ margin: 0 }}>This is how it looks when you set preferredPosition explicitly to below.</p>,
-          </div>}
-
-            preferredPosition='left'>
-            <div>
-              <p style={{ margin: 0 }}>Hover me hover me hover me over me hover me hover me</p>
-            </div>
-          </Tooltip>
-        </div>
+      <div style={{ width: 600 }}>
+        <TabsContainer numberOfTabs={2} id='baseid'>
+          {/* Use Composition to add styles around the nav and body */}
+            <Tabs tabgroupAriaLabel='Navigation'>
+              <Tab index={0}>
+                <button>Home</button>
+              </Tab>
+              <Tab index={1}>
+                <button>Events</button>
+              </Tab>
+            </Tabs>
+        
+            <TabPanel index={0}>
+              <div>
+                <h2>This is a fake home tab</h2>
+              </div>
+            </TabPanel>
+            <TabPanel index={1}>
+              <div>
+                <h2>This is a fake events tab</h2>
+              </div>
+            </TabPanel>
+          
+        </TabsContainer>
       </div>
     </>
   );

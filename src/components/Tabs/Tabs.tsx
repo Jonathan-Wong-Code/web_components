@@ -13,6 +13,7 @@ interface ITabsContext {
   setTabListFocused: Dispatch<SetStateAction<boolean>> | (() => void),
   currentOpenTab: number,
   tabListFocused: boolean,
+  id: string;
 }
 
 export const TabsContext = createContext<ITabsContext>({
@@ -20,22 +21,23 @@ export const TabsContext = createContext<ITabsContext>({
   setTabListFocused: () => { },
   tabListFocused: false,
   currentOpenTab: 0,
+  id: ''
 })
 
 interface ITabsContainer {
   children: React.ReactNode;
   numberOfTabs: number;
+  id: string;
 }
 
-
-
-export const TabsContainer = ({ children , numberOfTabs}: ITabsContainer) => {
+export const TabsContainer = ({ children , numberOfTabs, id }: ITabsContainer) => {
   const [currentOpenTab, setCurrentOpenTab] = useState<number>(0);
   const [tabListFocused, setTabListFocused] = useState<boolean>(false);
 
-  const value = useMemo(() => ({ currentOpenTab, setCurrentOpenTab, tabListFocused, setTabListFocused }), 
-  [currentOpenTab, setCurrentOpenTab, tabListFocused, setTabListFocused])
+  const value = useMemo(() => ({ currentOpenTab, setCurrentOpenTab, tabListFocused, setTabListFocused, id }), 
+  [currentOpenTab, setCurrentOpenTab, tabListFocused, setTabListFocused, id])
 
+  //a11y keyboard functionality
   useEffect(() => {
     const handleArrowKeyPress = (e: KeyboardEvent) => {
       if (e.key === 'ArrowLeft') {
@@ -79,9 +81,10 @@ const TabList = styled.div`
 `;
 interface ITabs {
   children: React.ReactElement[] | React.ReactElement
+  tabgroupAriaLabel: string;
 }
 
-export const Tabs = ({ children }: ITabs) => {
+export const Tabs = ({ children, tabgroupAriaLabel }: ITabs) => {
 
   const { setTabListFocused } = useContext(TabsContext);
 
@@ -92,6 +95,7 @@ export const Tabs = ({ children }: ITabs) => {
       tabIndex={0} 
       onFocus={() =>  setTabListFocused(true)}
       onBlur={() => setTabListFocused(false)}
+      aria-label={tabgroupAriaLabel}
     >
       {children}
     </TabList>
@@ -107,7 +111,7 @@ interface ITab {
 
 
 export const Tab = ({ children, index }: ITab): JSX.Element => {
-  const { setCurrentOpenTab, currentOpenTab, tabListFocused } = useContext(TabsContext);
+  const { setCurrentOpenTab, currentOpenTab, tabListFocused, id } = useContext(TabsContext);
 
   const isOpen = index === currentOpenTab;
 
@@ -115,6 +119,9 @@ export const Tab = ({ children, index }: ITab): JSX.Element => {
     React.cloneElement(children, {
       onClick: () => setCurrentOpenTab(index),
       role: 'tab',
+      'aria-selected': isOpen,
+      'aria-controls': `panel-${id}-${index}`,
+      id: `tab-id-${id}-${index}`,
       className: tabListFocused && isOpen ? 'focused-tab' : undefined,
       isOpen,
       tabIndex: -1,
@@ -130,11 +137,16 @@ interface ITabPanel {
 export const TabPanel = ({ index, children }: ITabPanel): JSX.Element => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const { currentOpenTab } = useContext(TabsContext);
+  const { currentOpenTab, id } = useContext(TabsContext);
 
   useEffect(() => {
     setIsOpen(index === currentOpenTab)
   }, [currentOpenTab, index])
 
-  return isOpen ? children : <></>;
+  return isOpen ? React.cloneElement(children, {
+    role: 'tabpanel',
+    id: `panel-${id}-${index}`,
+    'aria-labelledby': `tab-id-${id}-${index}`,
+    tabindex: 0,
+  }) : <></>;
 } 
