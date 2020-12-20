@@ -5,6 +5,13 @@ import React, {
   Dispatch,
   SetStateAction
 } from 'react';
+import styled from 'styled-components';
+
+const AccordionGroupContainer = styled.div<{ focusBorderColour: string, insideAccordionGroup: boolean}>`
+  border: ${({ focusBorderColour, insideAccordionGroup }) => 
+    insideAccordionGroup ? `1px solid ${focusBorderColour}` : '1px solid transparent'}
+`
+
 
 
 export interface IAccordionGroupProviderContext {
@@ -36,6 +43,7 @@ export const AccordionContainerProvider = ({
     -1
   );
 
+  // For a11y outlining accordion if focused into accordion group.
   const [insideAccordionGroup, setInsideAccordionGroup] = useState<boolean>(false);
 
   const value = useMemo(() => ({
@@ -46,8 +54,8 @@ export const AccordionContainerProvider = ({
   }), [activeAccordion, setActiveAccordion, setInsideAccordionGroup, isSingleOpen]);
 
   return (
-    <div style={{ border: insideAccordionGroup ? `1px solid ${focusBorderColour}` : '1px solid transparent' }}>
+    <AccordionGroupContainer focusBorderColour={focusBorderColour} insideAccordionGroup={insideAccordionGroup} data-testid="accordion-group-container">
       {<AccordionGroupContext.Provider value={value}>{children}</AccordionGroupContext.Provider>}
-    </div>
+    </AccordionGroupContainer>
   )
 };

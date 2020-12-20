@@ -110,7 +110,8 @@ const TooltipComponent =
           onFocus: () => handleOpenTooltip(),
           onBlur: () => closeTooltip(),
           'aria-describedby': 'tooltip-content',
-          ref: childrenRef
+          ref: childrenRef,
+          tabIndex: 0,
         })}
       </Container>
     );

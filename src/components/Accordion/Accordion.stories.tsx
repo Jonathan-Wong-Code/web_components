@@ -19,7 +19,7 @@ const Button = styled.button`
   outline: none;
 `
 
-export const Accordion = () => {
+export const DefaultAccordionNoAnimation = () => {
 
   // Follows all the WCAG guidelines and suggestions via https://www.w3.org/TR/wai-aria-practices-1.1/examples/accordion/accordion.html. As such feel free to put outline: none on button if you plan on using the border styles.
 
@@ -63,9 +63,11 @@ export const Accordion = () => {
   )
 }
 
-export const SingleOpenedAccordion = () => {
+export const SingleOpenedAccordionWithCustomFocusStylesAndAnimation = () => {
 
   // Follows all the WCAG guidelines and suggestions via https://www.w3.org/TR/wai-aria-practices-1.1/examples/accordion/accordion.html. As such feel free to put outline: none on button if you plan on using the border styles.
+
+  // This variant uses custom border focus colors... IF you don't want them set them to transparent however I could discourage doing this as its suggested by the w3.
 
   const content = [{
     buttonLabel: 'hello world',
@@ -82,14 +84,20 @@ export const SingleOpenedAccordion = () => {
       <AccordionContainerProvider isSingleOpen focusBorderColour='red'>
         {content.map((content, i) => (
           <AccordionContainer index={i} key={content.title} baseId='unique-id'>
-            <AccordionButton onOpenClick={action('open')} onCloseClick={action('close')}>
+            <AccordionButton
+              onOpenClick={action('open')}
+              onCloseClick={action('close')}
+              backgroundFocusColour='grey'
+              titleBorderFocusColour='red'
+            >
               <Button>
                 <AccordionTitle>
                   {content.buttonLabel}
                 </AccordionTitle>
               </Button>
             </AccordionButton>
-            <AccordionBody>
+            {/* Pass the transition if you want animations */}
+            <AccordionBody slideAnimation='.2s all ease'>
               <div style={{ background: 'red', padding: '16px' }}>
                 <h1>{content.title}</h1>
                 <p>{content.description}</p>
