@@ -18,10 +18,13 @@ export const Default = (): JSX.Element => {
       <div>
         <button onClick={openDialog}>Open me!</button>
       </div>
-      <Dialog onClose={() => {
-        action('Closing the dialog')();
-        closeDialog();
-      }} isOpen={open}>
+      <Dialog
+        onClose={() => {
+          action('Closing the dialog')();
+          closeDialog();
+        }}
+        isOpen={open}
+      >
         {open &&
           <>
             <div>I am the dialog content</div>

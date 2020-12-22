@@ -140,6 +140,7 @@ describe('<Accordion />', () => {
     const button = screen.getByRole('button', { name: 'button 1' });
     const buttonTwo = screen.getByRole('button', { name: 'button 2' });
 
+    // Open accordion one.
     userEvent.click(button);
     expect(onOpenClick).toHaveBeenCalledTimes(1);
     expect(button).toHaveAttribute('aria-expanded', 'true');

@@ -8,12 +8,10 @@ export default {
   component: Tab,
 } as Meta;
 
-
 const StyledTabContent = styled.div`
   padding: 16px;
   width: 600px;
 `
-
 
 export const Default = () => {
   // button is passed the isOpen prop implicitly to accomodate custom styles.
@@ -31,19 +29,19 @@ export const Default = () => {
 
 
   return (
-  <div style={{ width: 600}}>
-    <TabsContainer numberOfTabs={2} id='baseid'>
-      {/* Use Composition to add styles around the nav and body */}
-      <div style={{ borderBottom: '1px solid black'}}>
+    <div style={{ width: 600 }}>
+      <TabsContainer numberOfTabs={2} id='baseid'>
+        {/* Use Composition to add styles around the nav and body */}
+        <div style={{ borderBottom: '1px solid black' }}>
           <Tabs tabgroupAriaLabel='Name of Tabgroup'>
-          <Tab index={0}>
-            <StyledButton>Home</StyledButton>
-          </Tab>
-          <Tab index={1}>
-            <StyledButton>Events</StyledButton>
-          </Tab> 
-        </Tabs>
-      </div>
+            <Tab index={0}>
+              <StyledButton>Home</StyledButton>
+            </Tab>
+            <Tab index={1}>
+              <StyledButton>Events</StyledButton>
+            </Tab>
+          </Tabs>
+        </div>
         <StyledTabContent>
           <TabPanel index={0}>
             <div>
@@ -56,7 +54,7 @@ export const Default = () => {
             </div>
           </TabPanel>
         </StyledTabContent>
-    </TabsContainer>
-  </div>
+      </TabsContainer>
+    </div>
   )
 }
