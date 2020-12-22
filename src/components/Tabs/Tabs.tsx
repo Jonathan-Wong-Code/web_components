@@ -30,31 +30,32 @@ interface ITabsContainer {
   id: string;
 }
 
-export const TabsContainer = ({ children , numberOfTabs, id }: ITabsContainer) => {
+export const TabsContainer = ({ children, numberOfTabs, id }: ITabsContainer) => {
   const [currentOpenTab, setCurrentOpenTab] = useState<number>(0);
   const [tabListFocused, setTabListFocused] = useState<boolean>(false);
 
-  const value = useMemo(() => ({ currentOpenTab, setCurrentOpenTab, tabListFocused, setTabListFocused, id }), 
-  [currentOpenTab, setCurrentOpenTab, tabListFocused, setTabListFocused, id])
+  const value = useMemo(() => ({ currentOpenTab, setCurrentOpenTab, tabListFocused, setTabListFocused, id }),
+    [currentOpenTab, setCurrentOpenTab, tabListFocused, setTabListFocused, id])
 
   //a11y keyboard functionality
   useEffect(() => {
     const handleArrowKeyPress = (e: KeyboardEvent) => {
       if (e.key === 'ArrowLeft') {
-        if(currentOpenTab > 0) {
-         return setCurrentOpenTab(currentOpenTab - 1);
+        if (currentOpenTab > 0) {
+          return setCurrentOpenTab(currentOpenTab - 1);
         }
-        return setCurrentOpenTab(numberOfTabs -1);
+        return setCurrentOpenTab(numberOfTabs - 1);
       }
+
       if (e.key === 'ArrowRight') {
-        if(currentOpenTab < numberOfTabs - 1) {
+        if (currentOpenTab < numberOfTabs - 1) {
           return setCurrentOpenTab(currentOpenTab + 1);
         }
         return setCurrentOpenTab(0);
       }
     }
 
-    if(tabListFocused) {
+    if (tabListFocused) {
       window.addEventListener('keydown', handleArrowKeyPress);
     }
 
@@ -89,11 +90,11 @@ export const Tabs = ({ children, tabgroupAriaLabel }: ITabs) => {
   const { setTabListFocused } = useContext(TabsContext);
 
   return (
-    <TabList 
-      role="tablist" 
-      style={{ display: 'flex' }} 
-      tabIndex={0} 
-      onFocus={() =>  setTabListFocused(true)}
+    <TabList
+      role="tablist"
+      style={{ display: 'flex' }}
+      tabIndex={0}
+      onFocus={() => setTabListFocused(true)}
       onBlur={() => setTabListFocused(false)}
       aria-label={tabgroupAriaLabel}
     >
@@ -107,8 +108,6 @@ interface ITab {
   children: React.ReactElement;
   index: number;
 }
-
-
 
 export const Tab = ({ children, index }: ITab): JSX.Element => {
   const { setCurrentOpenTab, currentOpenTab, tabListFocused, id } = useContext(TabsContext);
@@ -147,6 +146,6 @@ export const TabPanel = ({ index, children }: ITabPanel): JSX.Element => {
     role: 'tabpanel',
     id: `panel-${id}-${index}`,
     'aria-labelledby': `tab-id-${id}-${index}`,
-    tabindex: 0,
+    tabIndex: 0,
   }) : <></>;
 } 

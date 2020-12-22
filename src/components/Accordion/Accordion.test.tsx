@@ -14,12 +14,12 @@ const content = [{
   buttonLabel: 'button 1',
   contentTitle: 'title 1',
   description: 'This is decription 1',
-  link: 'go to google',
+  link: 'link 1',
 }, {
   buttonLabel: 'button 2',
   contentTitle: 'title 2',
   description: 'This is decription 2',
-  link: 'go to google'
+  link: 'link 2'
 }]
 
 const Accordion = () => {
@@ -109,8 +109,6 @@ describe('<Accordion />', () => {
     expect(onOpenClick).toHaveBeenCalledTimes(2);
     expect(buttonTwo).toHaveAttribute('aria-expanded', 'true');
     expect(screen.getByTestId('accordion-content-1')).toHaveAttribute('aria-hidden', 'false');
-
-    screen.debug()
   });
 
   it('closes an accordion', () => {
@@ -149,12 +147,34 @@ describe('<Accordion />', () => {
 
     userEvent.click(buttonTwo);
     expect(onOpenClick).toHaveBeenCalledTimes(2);
-    // Button one closes autoamtically
+    // Button one closes automatically
     expect(button).toHaveAttribute('aria-expanded', 'false');
     expect(screen.getByTestId('accordion-content-0')).toHaveAttribute('aria-hidden', 'true');
 
     // Button Two is now open.
     expect(buttonTwo).toHaveAttribute('aria-expanded', 'true');
     expect(screen.getByTestId('accordion-content-1')).toHaveAttribute('aria-hidden', 'false');
+  });
+
+  it('should not let you tab into the accordion content while its closed', () => {
+    render(<Accordion />);
+    const button = screen.getByRole('button', { name: 'button 1' });
+    const buttonTwo = screen.getByRole('button', { name: 'button 2' });
+
+    userEvent.tab();
+    expect(button).toHaveFocus();
+    userEvent.tab();
+    expect(buttonTwo).toHaveFocus();
+
+    // Tab back to first accordion
+    userEvent.tab({ shift: true });
+    expect(button).toHaveFocus();
+
+    // Open button
+    userEvent.click(button);
+    userEvent.tab();
+    // Tab back in and we see link now can be focused instead of button two.
+    expect(screen.getByText('link 1')).toHaveFocus();
+    expect(buttonTwo).not.toHaveFocus();
   })
 })
