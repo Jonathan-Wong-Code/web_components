@@ -20,7 +20,7 @@ export const CodeInput = ({ size = 5, defaultValue, placeholder, onChange }: ICo
     const element = e.target;
     const newInputValue = e.target.value;
 
-    if (isNaN(Number(newInputValue))) return;
+    if (isNaN(Number(newInputValue))) return; // If input is not number do nothing.
 
     // If the indexes match, update that particular array input value.
     const updateInputValue = (currentInputValue: number, i: number) => {
@@ -37,6 +37,7 @@ export const CodeInput = ({ size = 5, defaultValue, placeholder, onChange }: ICo
     }
   }
 
+  // For left and right arrow navigation.
   const handleKeyDown = (e: React.KeyboardEvent, index: number) => {
     const element = e.target as HTMLElement;
     const nextInput = element.parentNode?.nextSibling?.firstChild?.nextSibling;
@@ -48,7 +49,7 @@ export const CodeInput = ({ size = 5, defaultValue, placeholder, onChange }: ICo
     }
 
     if (e.key === 'ArrowRight' && nextInput) {
-      // Navigae back up to div, to next div and then to the input.
+      // Navigate back up to div, to next div and then to the input.
       const nextInput = element.parentNode?.nextSibling?.firstChild?.nextSibling;
       setTimeout(() => (nextInput as HTMLElement).focus(), 0);
     }
@@ -61,6 +62,23 @@ export const CodeInput = ({ size = 5, defaultValue, placeholder, onChange }: ICo
     if (e.key === 'ArrowUp') e.preventDefault();
 
     if (e.key === 'ArrowDown') e.preventDefault();
+  }
+
+  // On paste handler
+
+  const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>, index: number) => {
+    const pastedCode = (e.clipboardData).getData('text').split('');
+    const newInputValues = [...inputValues];
+
+    for (let i = 0; i < size - 1; i++) {
+      const currentInpueValueIndex = index + i;
+
+      if (currentInpueValueIndex <= size - 1) {
+        newInputValues[currentInpueValueIndex] = pastedCode[i];
+      }
+    }
+
+    setInputValues(newInputValues);
   }
 
   return (
@@ -84,6 +102,8 @@ export const CodeInput = ({ size = 5, defaultValue, placeholder, onChange }: ICo
                 placeholder={placeholder}
                 maxLength={1}
                 value={data}
+                onPaste={e => handlePaste(e, index)}
+
                 onChange={e => handleChange(e, index)}
                 onFocus={e => e.target.select()}
               />

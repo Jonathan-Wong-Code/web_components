@@ -21,7 +21,8 @@ const Template: Story<ITooltip> = (args) => {
         <div style={{ marginLeft: '100px' }}>
           <Tooltip {...args}>
             <div>
-              <p style={{ margin: 0 }}>Hover me hover me hover me over me hover me hover me</p>
+              <p style={{ margin: 0 }}>Tooltip Component that adheres to: </p>
+              <a href="https://www.w3.org/WAI/WCAG21/Understanding/content-on-hover-or-focus.html">WCAG standards</a>
             </div>
           </Tooltip>
         </div>

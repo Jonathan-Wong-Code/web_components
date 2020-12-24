@@ -24,6 +24,8 @@ export default {
 } as Meta;
 
 export const Default = (): JSX.Element => {
+
+  // Supports navigaion using left + righ arrow keys as well as pasting.
   const [code, setCode] = React.useState('');
 
   React.useEffect(() => {

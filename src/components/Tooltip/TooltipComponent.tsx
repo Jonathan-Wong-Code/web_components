@@ -5,6 +5,7 @@ import Portal from '../Portal/Portal';
 import { Coords, Position, Number } from './types';
 import { useTooltip } from './TooltipContainer';
 
+// ** TOOLTIP CONTENT THTAT APPEARS/DISAPPEARS ** //
 interface ITooltipContent {
   preferredPosition?: Position
   closeTooltip: () => void;
@@ -48,12 +49,13 @@ const TooltipContent =
       </Content>
     );
   };
-
 interface ITooltipComponent {
   children: React.ReactElement;
   preferredPosition?: Position;
   tooltipContent: React.ReactElement;
 }
+
+// ** TOOLTIP COMPONENT INCLUDING THE CHILDREN THAT ARE HOVERED OVER ** //
 
 const TooltipComponent =
   ({
