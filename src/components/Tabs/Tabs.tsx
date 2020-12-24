@@ -14,6 +14,7 @@ interface ITabsContext {
   currentOpenTab: number,
   tabListFocused: boolean,
   id: string;
+  numberOfTabs: number;
 }
 
 export const TabsContext = createContext<ITabsContext>({
@@ -21,7 +22,8 @@ export const TabsContext = createContext<ITabsContext>({
   setTabListFocused: () => { },
   tabListFocused: false,
   currentOpenTab: 0,
-  id: ''
+  id: '',
+  numberOfTabs: 0,
 })
 
 interface ITabsContainer {
@@ -34,35 +36,8 @@ export const TabsContainer = ({ children, numberOfTabs, id }: ITabsContainer) =>
   const [currentOpenTab, setCurrentOpenTab] = useState<number>(0);
   const [tabListFocused, setTabListFocused] = useState<boolean>(false);
 
-  const value = useMemo(() => ({ currentOpenTab, setCurrentOpenTab, tabListFocused, setTabListFocused, id }),
-    [currentOpenTab, setCurrentOpenTab, tabListFocused, setTabListFocused, id])
-
-  //a11y keyboard functionality
-  useEffect(() => {
-    const handleArrowKeyPress = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowLeft') {
-        if (currentOpenTab > 0) {
-          return setCurrentOpenTab(currentOpenTab - 1);
-        }
-        return setCurrentOpenTab(numberOfTabs - 1);
-      }
-
-      if (e.key === 'ArrowRight') {
-        if (currentOpenTab < numberOfTabs - 1) {
-          return setCurrentOpenTab(currentOpenTab + 1);
-        }
-        return setCurrentOpenTab(0);
-      }
-    }
-
-    if (tabListFocused) {
-      window.addEventListener('keydown', handleArrowKeyPress);
-    }
-
-    return () => {
-      window.removeEventListener('keydown', handleArrowKeyPress)
-    }
-  }, [tabListFocused, currentOpenTab, numberOfTabs])
+  const value = useMemo(() => ({ currentOpenTab, setCurrentOpenTab, tabListFocused, setTabListFocused, id, numberOfTabs }),
+    [currentOpenTab, setCurrentOpenTab, tabListFocused, setTabListFocused, id, numberOfTabs])
 
   return (
     <TabsStyles>
@@ -87,10 +62,30 @@ interface ITabs {
 
 export const Tabs = ({ children, tabgroupAriaLabel }: ITabs) => {
 
-  const { setTabListFocused } = useContext(TabsContext);
+  const { setTabListFocused, setCurrentOpenTab, currentOpenTab, numberOfTabs } = useContext(TabsContext);
+
+  //a11y keyboard functionality
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === 'ArrowLeft') {
+      if (currentOpenTab > 0) {
+        return setCurrentOpenTab(currentOpenTab - 1);
+      }
+      return setCurrentOpenTab(numberOfTabs - 1);
+    }
+
+    if (e.key === 'ArrowRight') {
+      if (currentOpenTab < numberOfTabs - 1) {
+        return setCurrentOpenTab(currentOpenTab + 1);
+      }
+      return setCurrentOpenTab(0);
+    }
+  }
+
 
   return (
     <TabList
+      onKeyDown={handleKeyDown}
       role="tablist"
       style={{ display: 'flex' }}
       tabIndex={0}

@@ -34,7 +34,7 @@ describe('<Tooltip />', () => {
     fireEvent.mouseOver(button);
     expect(screen.getByText('This is tooltip content')).toBeInTheDocument();
 
-    fireEvent.keyDown(container, { key: 'Escape', code: 27 });
+    userEvent.type(container, '{esc}');
     expect(screen.queryByText('This is tooltip content')).not.toBeInTheDocument();
   });
 

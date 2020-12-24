@@ -14,6 +14,7 @@ const StyledTabContent = styled.div`
 `
 
 export const Default = () => {
+  // follows practises as per https://www.w3.org/TR/wai-aria-practices-1.1/examples/tabs/tabs-1/tabs.html
   // button is passed the isOpen prop implicitly to accomodate custom styles.
   const StyledButton = styled.button<{ isOpen?: boolean }>`
   padding: 16px;

@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import React from 'react';
-import { fireEvent } from '@testing-library/react';
 import { useCloseOnEscape } from './useCloseOnEscape';
+import userEvent from '@testing-library/user-event';
 
 // To see it tested in a real component see Dialog Component.
 const TestComponent = ({ closeElement }: { closeElement: () => void }) => {
@@ -14,6 +14,6 @@ it('runs closeElement when escape is pressed', () => {
   const closeElement = jest.fn();
   const { container } = render(<TestComponent closeElement={closeElement} />);
 
-  fireEvent.keyDown(container, { key: 'Escape', code: 27 });
+  userEvent.type(container, '{esc}')
   expect(closeElement).toHaveBeenCalledTimes(1);
 });

@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event'
 
 import { Tab, TabsContainer, TabPanel, Tabs } from './Tabs';
@@ -63,12 +63,8 @@ describe("The Tabs Component", () => {
     const tabGroup = screen.getByRole('tablist')
     expect(tabGroup).toHaveFocus();
 
-    fireEvent.keyDown(tabGroup, {
-      key: 'ArrowRight',
-      code: 'ArrowRight',
-      keyCode: 39,
-      charCode: 39,
-    });
+    userEvent.type(tabGroup, '{arrowright}')
+
 
     const homeTab = screen.getByRole('tab', { name: /home/i });
     const eventsTab = screen.getByRole('tab', { name: /events/i });
@@ -80,12 +76,7 @@ describe("The Tabs Component", () => {
 
     // Press right again and go back to the first tab.
 
-    fireEvent.keyDown(tabGroup, {
-      key: 'ArrowRight',
-      code: 'ArrowRight',
-      keyCode: 39,
-      charCode: 39,
-    });
+    userEvent.type(tabGroup, '{arrowright}')
 
     expect(screen.getByText(/This is a fake home tab/i)).toBeInTheDocument();
     expect(screen.queryByText(/This is a fake events tab/i)).not.toBeInTheDocument();
@@ -93,12 +84,8 @@ describe("The Tabs Component", () => {
     expect(eventsTab).not.toHaveClass('focused-tab');
 
     // Press left and go back to last tab
-    fireEvent.keyDown(tabGroup, {
-      key: 'ArrowLeft',
-      code: 'ArrowLeft',
-      keyCode: 37,
-      charCode: 37,
-    });
+    userEvent.type(tabGroup, '{arrowleft}')
+
 
     expect(screen.queryByText(/This is a fake home tab/i)).not.toBeInTheDocument();
     expect(screen.getByText(/This is a fake events tab/i)).toBeInTheDocument();

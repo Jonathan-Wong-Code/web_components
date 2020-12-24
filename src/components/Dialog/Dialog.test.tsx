@@ -1,4 +1,4 @@
-import { screen, fireEvent, render } from '@testing-library/react';
+import { screen, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { Dialog } from './Dialog';
@@ -80,17 +80,10 @@ describe('<Dialog />', () => {
     render(
       <MockDialog />
     );
-    
 
     userEvent.click(screen.getByRole('button', { name: /open me/i }));
 
-    fireEvent.keyDown(screen.getByTestId('fieldstone-dialog'), {
-      key: 'Escape',
-      code: 'Escape',
-      keyCode: 27,
-      charCode: 27,
-    });
-
+    userEvent.type(screen.getByTestId('fieldstone-dialog'), '{esc}')
     expect(screen.queryByText(/I am some dialogue content./i)).not.toBeInTheDocument();
   });
 
@@ -107,13 +100,7 @@ describe('<Dialog />', () => {
     });
     expect(innerButton).toHaveFocus();
 
-    fireEvent.keyDown(screen.getByTestId('fieldstone-dialog'), {
-      key: 'Escape',
-      code: 'Escape',
-      keyCode: 27,
-      charCode: 27,
-    });
-
+    userEvent.type(screen.getByTestId('fieldstone-dialog'), '{esc}')
     expect(screen.getByRole('button', { name: /open me/i })).toHaveFocus();
   });
 
