@@ -67,7 +67,8 @@ export const CodeInput = ({ size = 5, defaultValue, placeholder, onChange }: ICo
   // On paste handler
 
   const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>, index: number) => {
-    const pastedCode = (e.clipboardData).getData('text').split('');
+    const pastedCode = e.clipboardData.getData('text').split('');
+
     const newInputValues = [...inputValues];
 
     for (let i = 0; i < size - 1; i++) {

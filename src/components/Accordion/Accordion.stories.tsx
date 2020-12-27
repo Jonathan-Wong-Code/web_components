@@ -17,6 +17,7 @@ const Button = styled.button`
   padding: 16px 20px;
   font-size: 16px;
   outline: none;
+  cursor: pointer;
 `
 
 export const DefaultAccordionNoAnimation = () => {
@@ -26,12 +27,12 @@ export const DefaultAccordionNoAnimation = () => {
   const content = [{
     buttonLabel: 'hello world',
     title: 'title 1',
-    description: 'This is decription 1',
+    description: 'This is description 1. Provides a11y styling options as per https://www.w3.org/TR/wai-aria-practices-1.1/examples/accordion/accordion.html',
     link: 'go to google',
   }, {
     buttonLabel: 'hello world 2',
     title: 'title 2',
-    description: 'This is decription 2',
+    description: 'This is description 2. Provides a11y styling options as per https://www.w3.org/TR/wai-aria-practices-1.1/examples/accordion/accordion.html',
     link: 'go to google'
   }]
 
@@ -72,11 +73,11 @@ export const SingleOpenedAccordionWithCustomFocusStylesAndAnimation = () => {
   const content = [{
     buttonLabel: 'hello world',
     title: 'title 1',
-    description: 'This is decription 1'
+    description: 'This is description 1. Provides a11y styling options as per https://www.w3.org/TR/wai-aria-practices-1.1/examples/accordion/accordion.html'
   }, {
     buttonLabel: 'hello world 2',
     title: 'title 2',
-    description: 'This is decription 2'
+    description: 'This is description 2. Provides a11y styling options as per https://www.w3.org/TR/wai-aria-practices-1.1/examples/accordion/accordion.html'
   }]
 
   return (
