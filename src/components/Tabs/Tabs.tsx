@@ -48,8 +48,7 @@ export const TabsContainer = ({ children, numberOfTabs, id }: ITabsContainer) =>
   )
 }
 
-// The Tablist
-
+// Container for The Tablist
 const TabList = styled.div`
   &:focus {
     outline: none;
@@ -61,7 +60,6 @@ interface ITabs {
 }
 
 export const Tabs = ({ children, tabgroupAriaLabel }: ITabs) => {
-
   const { setTabListFocused, setCurrentOpenTab, currentOpenTab, numberOfTabs } = useContext(TabsContext);
 
   //a11y keyboard functionality
@@ -128,6 +126,7 @@ interface ITabPanel {
   children: React.ReactElement;
 }
 
+// TAB PANEL COMPONENT
 export const TabPanel = ({ index, children }: ITabPanel): JSX.Element => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
