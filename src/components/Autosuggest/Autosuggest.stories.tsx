@@ -12,44 +12,16 @@ export default {
   component: Autocomplete,
 } as Meta;
 
-const options = [
-  'lamb',
-  'dog',
-  'doggy',
-  'sherpa',
-  'sheep',
-  'rabbit',
-  'rabies'
-]
-
 const StyledInput = styled.input`
   width: 300px;
   padding: 4px 8px;
   border-radius: 5px;
 `
 
-export const Default = (): JSX.Element => {
-  const onChange = (value: string) => {
-    console.log(value);
-  }
-
-  return (
-    <>
-      <Autocomplete options={options} onChange={onChange} />
-    </>
-  )
-}
-
 export const AutoCompleteComposition = (): JSX.Element => {
   const [value, setValue] = useState<string>('');
 
   const options = ['sheep', 'sherpa', 'she', 'sheild']
-
-  const onChange = (value: string) => {
-    console.log(value);
-    setValue(value);
-    action(`I just did something with the value: ` + value)();
-  }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -72,7 +44,7 @@ export const AutoCompleteComposition = (): JSX.Element => {
 
   return (
     <Form onSubmit={handleSubmit}>
-      <AutoCompleteProvider onChange={onChange} options={options} initialValue={value}>
+      <AutoCompleteProvider onChange={setValue} options={options} initialValue={value}>
         <AutoCompleteInput>
           <StyledInput type="text" />
         </AutoCompleteInput>

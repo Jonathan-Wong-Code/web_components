@@ -8,8 +8,6 @@ interface IAutoCompleteInput {
 export const AutoCompleteInput = ({ children }: IAutoCompleteInput) => {
   const { inputValue, handleInputChange, handleBlur, handleKeyDown } = useAutoComplete();
 
-  console.log(inputValue)
-
   return (
     React.cloneElement(children, {
       value: inputValue,

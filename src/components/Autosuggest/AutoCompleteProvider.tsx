@@ -42,10 +42,6 @@ export const AutoCompleteProvider = ({ options = [], onChange, children, initial
   const [selectedOption, setSelectedOption] = useState<number>(-1) // For Keyboard up and down arrow
   const [isFocused, setIsFocused] = useState<boolean>(false);
 
-  React.useEffect(() => {
-    console.log(inputValue)
-  }, [inputValue])
-
   // Handles logic when the input is typed into
   const handleInputChange = useCallback((e: React.ChangeEvent) => {
     const inputElement = e.target as HTMLInputElement;
