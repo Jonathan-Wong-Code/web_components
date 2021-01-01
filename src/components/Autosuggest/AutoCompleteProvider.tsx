@@ -13,6 +13,7 @@ interface IAutoCompleteContext {
   setSelectedOption: Dispatch<SetStateAction<number>> | (() => void);
   setIsFocused: Dispatch<SetStateAction<boolean>> | (() => void);
   shownOptions: string[];
+  labelId: string
 }
 
 const AutoCompleteContext = createContext<IAutoCompleteContext>({
@@ -26,7 +27,8 @@ const AutoCompleteContext = createContext<IAutoCompleteContext>({
   setInputValue: () => { },
   setSelectedOption: () => { },
   setIsFocused: () => { },
-  shownOptions: []
+  shownOptions: [],
+  labelId: ''
 })
 
 interface IAutocomplete {
@@ -34,9 +36,10 @@ interface IAutocomplete {
   options: string[];
   children: React.ReactNode;
   initialValue: string;
+  labelId: string;
 }
 
-export const AutoCompleteProvider = ({ options = [], onChange, children, initialValue = '' }: IAutocomplete) => {
+export const AutoCompleteProvider = ({ options = [], onChange, children, initialValue, labelId }: IAutocomplete) => {
   const [inputValue, setInputValue] = useState<string>(initialValue);
   const [shownOptions, setShownOptions] = useState<string[]>(options);
   const [selectedOption, setSelectedOption] = useState<number>(-1) // For Keyboard up and down arrow
@@ -89,20 +92,22 @@ export const AutoCompleteProvider = ({ options = [], onChange, children, initial
     handleInputChange, inputValue, selectedOption,
     handleKeyDown, handleOptionClick, handleBlur,
     setInputValue, setSelectedOption, setIsFocused,
-    isFocused, shownOptions,
+    isFocused, shownOptions, labelId
   }), [
     handleInputChange, inputValue, selectedOption,
     handleKeyDown, handleOptionClick, handleBlur,
     setInputValue, setSelectedOption, setIsFocused,
-    isFocused, shownOptions
+    isFocused, shownOptions, labelId
   ])
 
   return (
-    <div style={{ display: 'inline-block', position: 'relative' }}>
-      <AutoCompleteContext.Provider value={value}>
-        {children}
-      </AutoCompleteContext.Provider>
-    </div>
+    <>
+      <div style={{ display: 'inline-block', position: 'relative' }}>
+        <AutoCompleteContext.Provider value={value}>
+          {children}
+        </AutoCompleteContext.Provider>
+      </div>
+    </>
   )
 }
 

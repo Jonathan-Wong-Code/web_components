@@ -12,10 +12,16 @@ export default {
   component: Autocomplete,
 } as Meta;
 
-const StyledInput = styled.input`
-  width: 300px;
-  padding: 4px 8px;
-  border-radius: 5px;
+const Form = styled.form`
+  & .auto-complete-list {
+    background: #f4f4f4;
+  }
+
+  & .auto-complete-list-item {
+    padding: 4px 0;
+    font-size: 1rem;
+    padding-left: 8px;
+  }
 `
 
 export const AutoCompleteComposition = (): JSX.Element => {
@@ -27,26 +33,25 @@ export const AutoCompleteComposition = (): JSX.Element => {
     e.preventDefault();
     action(`I just did something with the value: ` + value)();
   }
+  // Use Class names to style the list and each item
+  //   const Form = styled.form`
+  //   & .autocomplete-list {
+  //     background: #f4f4f4;
+  //   }
 
-  const Form = styled.form`
-  & .autocomplete-list {
-    background: #f4f4f4;
-    border: 1px solid black;
-    border-top: none;
-  }
-
-  & .autocomplete-list-item {
-    padding: 4px 0;
-    font-size: 1rem;
-    padding-left: 8px;
-  }
-`
+  //   & .autocomplete-list-item {
+  //     padding: 4px 0;
+  //     font-size: 1rem;
+  //     padding-left: 8px;
+  //   }
+  // `
 
   return (
     <Form onSubmit={handleSubmit}>
-      <AutoCompleteProvider onChange={setValue} options={options} initialValue={value}>
+      <label htmlFor="auto-complete-input" id='auto-complete-label'>Enter Search Term:</label>
+      <AutoCompleteProvider onChange={setValue} options={options} initialValue={value} labelId='auto-complete-label'>
         <AutoCompleteInput>
-          <StyledInput type="text" />
+          <input type="text" id='auto-complete-input' placeholder='Enter Search Term' autoComplete="off" />
         </AutoCompleteInput>
         <AutoCompleteOptions optionHighlightColour={'grey'} />
       </AutoCompleteProvider>

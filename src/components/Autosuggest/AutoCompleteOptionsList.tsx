@@ -49,15 +49,20 @@ const UL = styled.ul`
 `
 
 export const AutoCompleteOptions = ({ optionHighlightColour }: IAutoCompleteOptions): JSX.Element => {
-  const { isFocused, shownOptions, selectedOption, handleOptionClick } = useAutoComplete();
+  const { isFocused, shownOptions, selectedOption, handleOptionClick, labelId } = useAutoComplete();
 
   return (
-    <UL className={isFocused ? 'autocomplete-list' : ''}>
+    <UL
+      className={isFocused ? 'auto-complete-list' : ''}
+      id='auto-complete-list-box'
+      role='listbox'
+      aria-labelledby={labelId}
+    >
       {isFocused && shownOptions.map((option, index) =>
         <StyledListItem
           isHighlighted={index === selectedOption}
           onMouseDown={() => handleOptionClick(index)}
-          className='autocomplete-list-item'
+          className='auto-complete-list-item'
           optionHighlightColour={optionHighlightColour}
         >
           {option}
