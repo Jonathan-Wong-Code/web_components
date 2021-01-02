@@ -6,7 +6,7 @@ interface IAutoCompleteInput {
 }
 
 export const AutoCompleteInput = ({ children }: IAutoCompleteInput) => {
-  const { inputValue, handleInputChange, handleBlur, handleKeyDown, isFocused } = useAutoComplete();
+  const { inputValue, handleInputChange, handleBlur, handleKeyDown, isFocused, selectedOption } = useAutoComplete();
 
   return (
     <div
@@ -24,8 +24,11 @@ export const AutoCompleteInput = ({ children }: IAutoCompleteInput) => {
         onKeyDown: handleKeyDown,
         'aria-autocomplete': 'list',
         'aria-controls': 'auto-complete-list-box',
-        id: 'auto-complete-combo-box'
-      })}
+        id: 'auto-complete-combo-box',
+        'aria-activedescendant': `auto-complete-${selectedOption}`
+      }
+
+      )}
     </div>
   )
 }

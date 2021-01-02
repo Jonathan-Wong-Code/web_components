@@ -69,7 +69,7 @@ export const AutoCompleteProvider = ({ options = [], onChange, children, initial
       setSelectedOption(prevOption => prevOption + 1)
     }
 
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && isFocused) {
       setIsFocused(false)
       setInputValue(shownOptions[selectedOption]);
       setSelectedOption(-1);

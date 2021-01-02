@@ -27,11 +27,16 @@ const Form = styled.form`
 export const AutoCompleteComposition = (): JSX.Element => {
   const [value, setValue] = useState<string>('');
 
-  const options = ['sheep', 'sherpa', 'she', 'sheild']
+  const options = ['sheep', 'sherpa', 'she', 'shed']
+
+  const onChange = (inputValue: string) => {
+    setValue(inputValue)
+  }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     action(`I just did something with the value: ` + value)();
+    console.log(value)
   }
   // Use Class names to style the list and each item
   //   const Form = styled.form`
@@ -47,15 +52,19 @@ export const AutoCompleteComposition = (): JSX.Element => {
   // `
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <label htmlFor="auto-complete-input" id='auto-complete-label'>Enter Search Term:</label>
-      <AutoCompleteProvider onChange={setValue} options={options} initialValue={value} labelId='auto-complete-label'>
-        <AutoCompleteInput>
-          <input type="text" id='auto-complete-input' placeholder='Enter Search Term' autoComplete="off" />
-        </AutoCompleteInput>
-        <AutoCompleteOptions optionHighlightColour={'grey'} />
-      </AutoCompleteProvider>
-      <button>Search/Do Things</button>
-    </Form>
+    <>
+      <Form onSubmit={handleSubmit}>
+        {/* label should be outside the provider to preserve combobox styling */}
+        <label htmlFor="auto-complete-input" id='auto-complete-label'>Enter Search Term:</label>
+        <AutoCompleteProvider onChange={onChange} options={options} initialValue={value} labelId='auto-complete-label'>
+          <AutoCompleteInput>
+            <input type="text" id='auto-complete-input' placeholder='Enter Search Term' autoComplete="off" />
+          </AutoCompleteInput>
+          <AutoCompleteOptions optionHighlightColour={'grey'} />
+        </AutoCompleteProvider>
+        <button type='submit'>Search/Do Things</button>
+      </Form>
+      <p>Current value is {value}</p>
+    </>
   )
 }

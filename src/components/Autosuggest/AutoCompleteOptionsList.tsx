@@ -64,6 +64,8 @@ export const AutoCompleteOptions = ({ optionHighlightColour }: IAutoCompleteOpti
           onMouseDown={() => handleOptionClick(index)}
           className='auto-complete-list-item'
           optionHighlightColour={optionHighlightColour}
+          role='option'
+          id={`auto-complete-${index}`}
         >
           {option}
         </StyledListItem>)}
