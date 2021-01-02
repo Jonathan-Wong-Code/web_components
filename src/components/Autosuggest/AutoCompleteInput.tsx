@@ -15,7 +15,6 @@ export const AutoCompleteInput = ({ children }: IAutoCompleteInput) => {
       aria-controls='auto-complete-list-box'
       aria-owns='auto-complete-list-box'
       aria-haspopup='listbox'
-      id='ex1-combobox'
     >
       { React.cloneElement(children, {
         value: inputValue,
@@ -24,8 +23,9 @@ export const AutoCompleteInput = ({ children }: IAutoCompleteInput) => {
         onKeyDown: handleKeyDown,
         'aria-autocomplete': 'list',
         'aria-controls': 'auto-complete-list-box',
-        id: 'auto-complete-combo-box',
-        'aria-activedescendant': `auto-complete-${selectedOption}`
+        id: 'auto-complete-input',
+        'aria-activedescendant': `auto-complete-${selectedOption}`,
+        'data-testid': 'auto-complete-input'
       }
 
       )}

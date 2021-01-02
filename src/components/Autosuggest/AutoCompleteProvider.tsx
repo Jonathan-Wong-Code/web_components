@@ -48,7 +48,9 @@ export const AutoCompleteProvider = ({ options = [], onChange, children, initial
   // Handles logic when the input is typed into
   const handleInputChange = useCallback((e: React.ChangeEvent) => {
     const inputElement = e.target as HTMLInputElement;
-    setShownOptions(() => options.filter((option: string) => option.toLowerCase().includes(inputElement.value.toLowerCase())))
+
+    setShownOptions(options.filter((option: string) => option.toLowerCase().includes(inputElement.value.toLowerCase())))
+
     setInputValue(inputElement.value)
     setIsFocused(true)
   }, [setInputValue, setIsFocused, setShownOptions, options])
@@ -75,7 +77,7 @@ export const AutoCompleteProvider = ({ options = [], onChange, children, initial
       setSelectedOption(-1);
       onChange(shownOptions[selectedOption])
     }
-  }, [onChange, selectedOption, shownOptions])
+  }, [onChange, selectedOption, shownOptions, isFocused])
 
   const handleOptionClick = useCallback((index: number) => {
     setInputValue(shownOptions[index]);

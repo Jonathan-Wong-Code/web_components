@@ -36,7 +36,7 @@ export const AutoCompleteComposition = (): JSX.Element => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     action(`I just did something with the value: ` + value)();
-    console.log(value)
+
   }
   // Use Class names to style the list and each item
   //   const Form = styled.form`
@@ -56,7 +56,12 @@ export const AutoCompleteComposition = (): JSX.Element => {
       <Form onSubmit={handleSubmit}>
         {/* label should be outside the provider to preserve combobox styling */}
         <label htmlFor="auto-complete-input" id='auto-complete-label'>Enter Search Term:</label>
-        <AutoCompleteProvider onChange={onChange} options={options} initialValue={value} labelId='auto-complete-label'>
+        <AutoCompleteProvider
+          onChange={onChange}
+          options={options}
+          initialValue={value}
+          labelId='auto-complete-label'
+        >
           <AutoCompleteInput>
             <input type="text" id='auto-complete-input' placeholder='Enter Search Term' autoComplete="off" />
           </AutoCompleteInput>

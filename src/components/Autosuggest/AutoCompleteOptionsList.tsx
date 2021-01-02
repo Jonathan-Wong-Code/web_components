@@ -66,6 +66,8 @@ export const AutoCompleteOptions = ({ optionHighlightColour }: IAutoCompleteOpti
           optionHighlightColour={optionHighlightColour}
           role='option'
           id={`auto-complete-${index}`}
+          data-testid='auto-complete-list-item'
+          key={option}
         >
           {option}
         </StyledListItem>)}
