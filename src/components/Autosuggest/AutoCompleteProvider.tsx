@@ -46,26 +46,45 @@ export const AutoCompleteProvider = ({ options = [], onChange, children, initial
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const [listScrollItemAmount, setListScrollItemAmount] = useState<number>(1);
   const [scrollDirection, setScrollDirection] = useState<string>('');
+  const [currentHighlightPosition, setHighlightPosition] = useState<number>(1);
+
+  // React.useEffect(() => {
+  //   console.log(currentHighlightPosition)
+
+  // }, [currentHighlightPosition])
+
 
   React.useLayoutEffect(() => {
     const listbox = document.querySelector('.auto-complete-list') as HTMLElement;
     const selectedElement = document.querySelector('.selected') as HTMLElement;
-
     if (selectedElement) {
       const totalOffsetHeight = selectedElement.offsetHeight * selectedOption + 1
 
-      if (scrollDirection === 'down' && totalOffsetHeight > listbox.offsetHeight) {
+      if (scrollDirection === 'down') {
+        setHighlightPosition(prevState => {
+          if (prevState === 4) return prevState;
+          else return prevState + 1;
+        })
 
-        listbox.scrollTop = selectedElement.offsetHeight * listScrollItemAmount;
-        return setListScrollItemAmount((prevState: number) => prevState + 1);
+        if (totalOffsetHeight > listbox.offsetHeight && currentHighlightPosition === 4) {
+          listbox.scrollTop = selectedElement.offsetHeight * listScrollItemAmount;
+          return setListScrollItemAmount((prevState: number) => prevState + 1);
+        }
       }
 
       if (scrollDirection === 'up') {
         if (selectedOption === shownOptions.length - 1) {
           listbox.scrollTop = listbox.scrollHeight;
+          setHighlightPosition(4);
         } else {
-          // listbox.scrollTop = selectedElement.offsetHeight * listScrollItemAmount;
-          // return setListScrollItemAmount((prevState: number) => prevState - 1);
+          setHighlightPosition(prevState => {
+            if (prevState === 1) return 1;
+            else return prevState - 1;
+          })
+          if (currentHighlightPosition === 1) {
+            listbox.scrollTop = selectedElement.offsetHeight * (listScrollItemAmount + 1);
+            return setListScrollItemAmount((prevState: number) => prevState - 1);
+          }
         }
       }
     }
@@ -100,6 +119,7 @@ export const AutoCompleteProvider = ({ options = [], onChange, children, initial
       setScrollDirection('down');
       if (selectedOption === shownOptions.length - 1) {
         listbox.scrollTop = 0;
+        setHighlightPosition(1);
         setListScrollItemAmount(1);
         return setSelectedOption(0);
       }

@@ -51,7 +51,7 @@ const UL = styled.ul<{ maxHeight: number | string }>`
   max-height: ${({ maxHeight }) => `${maxHeight}px`}
 `
 
-export const AutoCompleteOptions = ({ optionHighlightColour, numVisibleItems = 3 }: IAutoCompleteOptions): JSX.Element => {
+export const AutoCompleteOptions = ({ optionHighlightColour, numVisibleItems = 4 }: IAutoCompleteOptions): JSX.Element => {
   const [maxHeight, setMaxHeight] = useState<number>(0);
   const { isFocused, shownOptions, selectedOption, handleOptionClick, labelId } = useAutoComplete();
 
