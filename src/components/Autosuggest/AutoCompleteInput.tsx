@@ -16,19 +16,19 @@ export const AutoCompleteInput = ({ children }: IAutoCompleteInput) => {
       aria-owns='auto-complete-list-box'
       aria-haspopup='listbox'
     >
-      { React.cloneElement(children, {
-        value: inputValue,
-        onChange: handleInputChange,
-        onBlur: handleBlur,
-        onKeyDown: handleKeyDown,
-        'aria-autocomplete': 'list',
-        'aria-controls': 'auto-complete-list-box',
-        id: 'auto-complete-input',
-        'aria-activedescendant': `auto-complete-${selectedOption}`,
-        'data-testid': 'auto-complete-input'
-      }
-
-      )}
+      {
+        React.cloneElement(children, {
+          value: inputValue,
+          onChange: handleInputChange,
+          onBlur: handleBlur,
+          onKeyDown: handleKeyDown,
+          'aria-autocomplete': 'list',
+          'aria-controls': 'auto-complete-list-box',
+          id: 'auto-complete-input',
+          'aria-activedescendant': `auto-complete-${selectedOption}`,
+          'data-testid': 'auto-complete-input'
+        }
+        )}
     </div>
   )
 }

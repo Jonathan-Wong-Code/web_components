@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import userEvent from '@testing-library/user-event';
-import { render, screen, waitFor, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { AutoCompleteInput } from './AutoCompleteInput';
 import { AutoCompleteProvider } from './AutoCompleteProvider';
 import { AutoCompleteOptions } from './AutoCompleteOptionsList'
@@ -27,7 +27,7 @@ export const AutoCompleteComposition = (): JSX.Element => {
         <AutoCompleteInput>
           <input type="text" id='auto-complete-input' placeholder='Enter Search Term' autoComplete="off" />
         </AutoCompleteInput>
-        <AutoCompleteOptions optionHighlightColour={'grey'} />
+        <AutoCompleteOptions optionHighlightColour={'grey'} maxHeight={300} />
       </AutoCompleteProvider>
     </>
   )
@@ -43,11 +43,11 @@ describe("The AutoComplete Component", () => {
 
     const input = screen.getByTestId('auto-complete-input');
     userEvent.type(input, 'sh');
-    await waitFor(() => expect(screen.getAllByRole('option')).toHaveLength(4))
+    expect(screen.getAllByRole('option')).toHaveLength(4)
     userEvent.type(input, 'ed');
 
     expect(input).toHaveValue('shed');
-    await waitFor(() => expect(screen.getAllByRole('option')).toHaveLength(1))
+    expect(screen.getAllByRole('option')).toHaveLength(1);
   })
 
   it('should select an option and close the dropdown when you click on an item', () => {
@@ -101,5 +101,22 @@ describe("The AutoComplete Component", () => {
 
     expect(input).toHaveValue('sheep');
     expect(screen.queryAllByRole('option')).toHaveLength(0);
+  })
+
+  it('should close the dropdown when escape is pressed', () => {
+    render(<AutoCompleteComposition />)
+    const input = screen.getByTestId('auto-complete-input');
+    userEvent.type(input, 'sh');
+    expect(screen.getAllByRole('option')).toHaveLength(4)
+
+    fireEvent.keyDown(input, {
+      key: "Escape",
+      code: "Escape",
+      keyCode: 27,
+      charCode: 27
+    });
+
+    expect(screen.queryAllByRole('option')).toHaveLength(0)
+
   })
 })

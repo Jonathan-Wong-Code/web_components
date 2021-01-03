@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useAutoComplete } from './AutoCompleteProvider';
 import styled from 'styled-components';
 
@@ -23,9 +23,10 @@ export const AutoCompleteOptionsItem = ({
     }
   })
 }
-
 interface IAutoCompleteOptions {
   optionHighlightColour: string;
+  maxHeight?: number | string;
+  numVisibleItems?: number;
 }
 
 const StyledListItem = styled.li<{ isHighlighted: boolean, optionHighlightColour: string }>`
@@ -39,17 +40,28 @@ const StyledListItem = styled.li<{ isHighlighted: boolean, optionHighlightColour
   }
 `
 
-const UL = styled.ul`
+const UL = styled.ul<{ maxHeight: number | string }>`
   position: absolute;
   top: bottom;
   left: 0;
   right: 0;
   margin: 0;
   padding: 0;
+  overflow-y: auto;
+  max-height: ${({ maxHeight }) => `${maxHeight}px`}
 `
 
-export const AutoCompleteOptions = ({ optionHighlightColour }: IAutoCompleteOptions): JSX.Element => {
+export const AutoCompleteOptions = ({ optionHighlightColour, numVisibleItems = 3 }: IAutoCompleteOptions): JSX.Element => {
+  const [maxHeight, setMaxHeight] = useState<number>(0);
   const { isFocused, shownOptions, selectedOption, handleOptionClick, labelId } = useAutoComplete();
+
+  React.useEffect(() => {
+    if (isFocused) {
+      const selectedElement = document.querySelector('.selected') as HTMLElement;
+      setMaxHeight(selectedElement.offsetHeight * numVisibleItems);
+    }
+
+  }, [numVisibleItems, isFocused])
 
   return (
     <UL
@@ -57,12 +69,13 @@ export const AutoCompleteOptions = ({ optionHighlightColour }: IAutoCompleteOpti
       id='auto-complete-list-box'
       role='listbox'
       aria-labelledby={labelId}
+      maxHeight={maxHeight}
     >
       {isFocused && shownOptions.map((option, index) =>
         <StyledListItem
           isHighlighted={index === selectedOption}
           onMouseDown={() => handleOptionClick(index)}
-          className='auto-complete-list-item'
+          className={`auto-complete-list-item${index === selectedOption ? ' selected' : ''}`}
           optionHighlightColour={optionHighlightColour}
           role='option'
           id={`auto-complete-${index}`}

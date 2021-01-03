@@ -24,10 +24,10 @@ const Form = styled.form`
   }
 `
 
-export const AutoCompleteComposition = (): JSX.Element => {
+export const AutoCompleteCustomDropDownHeightAndHighlightColor = (): JSX.Element => {
   const [value, setValue] = useState<string>('');
 
-  const options = ['sheep', 'sherpa', 'she', 'shed']
+  const options = ['sheep', 'sherpa', 'she', 'shed', 'shower', 'sled', 'santa']
 
   const onChange = (inputValue: string) => {
     setValue(inputValue)
@@ -65,7 +65,7 @@ export const AutoCompleteComposition = (): JSX.Element => {
           <AutoCompleteInput>
             <input type="text" id='auto-complete-input' placeholder='Enter Search Term' autoComplete="off" />
           </AutoCompleteInput>
-          <AutoCompleteOptions optionHighlightColour={'grey'} />
+          <AutoCompleteOptions optionHighlightColour={'grey'} maxHeight={100} />
         </AutoCompleteProvider>
         <button type='submit'>Search/Do Things</button>
       </Form>
