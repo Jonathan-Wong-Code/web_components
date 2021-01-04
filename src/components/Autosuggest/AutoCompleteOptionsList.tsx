@@ -58,7 +58,7 @@ export const AutoCompleteOptions = ({ optionHighlightColour, numVisibleItems = 4
   React.useEffect(() => {
     if (isFocused) {
       const selectedElement = document.querySelector('.selected') as HTMLElement;
-      setMaxHeight(selectedElement.offsetHeight * numVisibleItems);
+      selectedElement && setMaxHeight(selectedElement.offsetHeight * numVisibleItems);
     }
 
   }, [numVisibleItems, isFocused])
