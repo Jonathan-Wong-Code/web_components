@@ -13,7 +13,8 @@ interface IAutoCompleteContext {
   setSelectedOption: Dispatch<SetStateAction<number>>;
   setIsFocused: Dispatch<SetStateAction<boolean>>;
   shownOptions: string[];
-  labelId: string
+  labelId: string;
+  numVisibleItems: number;
 }
 
 const AutoCompleteContext = createContext<IAutoCompleteContext>({
@@ -28,7 +29,8 @@ const AutoCompleteContext = createContext<IAutoCompleteContext>({
   setSelectedOption: () => { },
   setIsFocused: () => { },
   shownOptions: [],
-  labelId: ''
+  labelId: '',
+  numVisibleItems: 4
 })
 
 interface IAutocomplete {
@@ -37,9 +39,10 @@ interface IAutocomplete {
   children: React.ReactNode;
   initialValue: string;
   labelId: string;
+  numVisibleItems: number;
 }
 
-export const AutoCompleteProvider = ({ options = [], onChange, children, initialValue, labelId }: IAutocomplete) => {
+export const AutoCompleteProvider = ({ options = [], onChange, children, initialValue, labelId, numVisibleItems = 4 }: IAutocomplete) => {
   const [inputValue, setInputValue] = useState<string>(initialValue);
   const [shownOptions, setShownOptions] = useState<string[]>(options);
   const [selectedOption, setSelectedOption] = useState<number>(0) // For Keyboard up and down arrow
@@ -48,39 +51,38 @@ export const AutoCompleteProvider = ({ options = [], onChange, children, initial
   const [scrollDirection, setScrollDirection] = useState<string>('');
   const [currentHighlightPosition, setHighlightPosition] = useState<number>(1);
 
-  // React.useEffect(() => {
-  //   console.log(currentHighlightPosition)
-
-  // }, [currentHighlightPosition])
-
+  const lastItem = shownOptions.length - 1;
 
   React.useLayoutEffect(() => {
     const listbox = document.querySelector('.auto-complete-list') as HTMLElement;
     const selectedElement = document.querySelector('.selected') as HTMLElement;
     if (selectedElement && isFocused) {
       const totalOffsetHeight = selectedElement.offsetHeight * selectedOption + 1
+      const shouldScrollDown = totalOffsetHeight > listbox.offsetHeight;
+      const lastItemHighlighted = currentHighlightPosition === numVisibleItems
 
       if (scrollDirection === 'down') {
         setHighlightPosition(prevState => {
-          if (prevState === 4) return prevState;
+          if (prevState === numVisibleItems) return prevState;
           else return prevState + 1;
         })
 
-        if (totalOffsetHeight > listbox.offsetHeight && currentHighlightPosition === 4) {
+        if (shouldScrollDown && lastItemHighlighted) {
           listbox.scrollTop = selectedElement.offsetHeight * listScrollItemAmount;
           return setListScrollItemAmount((prevState: number) => prevState + 1);
         }
       }
 
       if (scrollDirection === 'up') {
-        if (selectedOption === shownOptions.length - 1) {
+        if (selectedOption === lastItem) {
           listbox.scrollTop = listbox.scrollHeight;
-          setHighlightPosition(4);
+          setHighlightPosition(numVisibleItems);
         } else {
           setHighlightPosition(prevState => {
             if (prevState === 1) return 1;
             else return prevState - 1;
           })
+
           if (currentHighlightPosition === 1) {
             listbox.scrollTop = selectedElement.offsetHeight * selectedOption;
             return setListScrollItemAmount((prevState: number) => prevState - 1);
@@ -88,16 +90,14 @@ export const AutoCompleteProvider = ({ options = [], onChange, children, initial
         }
       }
     }
-  }, [selectedOption, scrollDirection])
+  }, [selectedOption, scrollDirection, isFocused, lastItem, numVisibleItems, currentHighlightPosition])
   // We don't actually want to use listScrollItemAmount as a dependency or it is infinite render. 
-  // We just care when the selectedOption changes.
+  // We just care when the other fields change
 
   // Handles logic when the input is typed into
   const handleInputChange = useCallback((e: React.ChangeEvent) => {
     const inputElement = e.target as HTMLInputElement;
-
     setShownOptions(options.filter((option: string) => option.toLowerCase().includes(inputElement.value.toLowerCase())))
-
     setInputValue(inputElement.value)
     setIsFocused(true)
   }, [setInputValue, setIsFocused, setShownOptions, options])
@@ -109,7 +109,7 @@ export const AutoCompleteProvider = ({ options = [], onChange, children, initial
     if (e.key === 'ArrowUp') {
       setScrollDirection('up');
       if (selectedOption === 0) {
-        return setSelectedOption(shownOptions.length - 1)
+        return setSelectedOption(lastItem)
       }
 
       return setSelectedOption(prevOption => prevOption - 1)
@@ -117,7 +117,7 @@ export const AutoCompleteProvider = ({ options = [], onChange, children, initial
 
     if (e.key === 'ArrowDown') {
       setScrollDirection('down');
-      if (selectedOption === shownOptions.length - 1) {
+      if (selectedOption === lastItem) {
         listbox.scrollTop = 0;
         setHighlightPosition(1);
         setListScrollItemAmount(1);
@@ -137,7 +137,7 @@ export const AutoCompleteProvider = ({ options = [], onChange, children, initial
     if (e.key === 'Escape') {
       setIsFocused(false);
     }
-  }, [onChange, selectedOption, shownOptions, isFocused])
+  }, [onChange, selectedOption, shownOptions, isFocused, lastItem])
 
   const handleOptionClick = useCallback((index: number) => {
     setInputValue(shownOptions[index]);
@@ -154,12 +154,12 @@ export const AutoCompleteProvider = ({ options = [], onChange, children, initial
     handleInputChange, inputValue, selectedOption,
     handleKeyDown, handleOptionClick, handleBlur,
     setInputValue, setSelectedOption, setIsFocused,
-    isFocused, shownOptions, labelId
+    isFocused, shownOptions, labelId, numVisibleItems
   }), [
     handleInputChange, inputValue, selectedOption,
     handleKeyDown, handleOptionClick, handleBlur,
     setInputValue, setSelectedOption, setIsFocused,
-    isFocused, shownOptions, labelId
+    isFocused, shownOptions, labelId, numVisibleItems
   ])
 
   return (
