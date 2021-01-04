@@ -88,7 +88,7 @@ export const AutoCompleteProvider = ({ options = [], onChange, children, initial
         }
       }
     }
-  }, [selectedOption, scrollDirection])
+  }, [selectedOption, scrollDirection, isFocused, shownOptions.length, currentHighlightPosition])
   // We don't actually want to use listScrollItemAmount as a dependency or it is infinite render. 
   // We just care when the selectedOption changes.
 
