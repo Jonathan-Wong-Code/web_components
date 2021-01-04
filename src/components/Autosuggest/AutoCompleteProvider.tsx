@@ -57,7 +57,7 @@ export const AutoCompleteProvider = ({ options = [], onChange, children, initial
   React.useLayoutEffect(() => {
     const listbox = document.querySelector('.auto-complete-list') as HTMLElement;
     const selectedElement = document.querySelector('.selected') as HTMLElement;
-    if (selectedElement) {
+    if (selectedElement && isFocused) {
       const totalOffsetHeight = selectedElement.offsetHeight * selectedOption + 1
 
       if (scrollDirection === 'down') {
@@ -82,7 +82,7 @@ export const AutoCompleteProvider = ({ options = [], onChange, children, initial
             else return prevState - 1;
           })
           if (currentHighlightPosition === 1) {
-            listbox.scrollTop = selectedElement.offsetHeight * (listScrollItemAmount + 1);
+            listbox.scrollTop = selectedElement.offsetHeight * selectedOption;
             return setListScrollItemAmount((prevState: number) => prevState - 1);
           }
         }
