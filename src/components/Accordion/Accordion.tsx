@@ -1,23 +1,28 @@
-import React, { useContext, useRef, } from 'react';
+import React, { useContext, useRef } from 'react';
 import styled from 'styled-components';
-import { AccordionContext } from './AccordionContainerProvider'
+import { AccordionContext } from './AccordionContainerProvider';
 import { AccordionGroupContext } from './AccordionGroupProvider';
 import useToggleFocusableElements from '../../hooks/useToggleFocusableElements/useToggleFocusElements';
 // ** ACCORDION HEADER/BUTTON ** //
 interface IAccordionButton {
   children: React.ReactElement;
-  onOpenClick?: () => void,
-  onCloseClick?: () => void,
+  onOpenClick?: () => void;
+  onCloseClick?: () => void;
   backgroundFocusColour?: string;
   titleBorderFocusColour?: string;
 }
 
-const ButtonContainerDiv = styled.div<{ isOpen: boolean, backgroundFocusColour: string, titleBorderFocusColour: string }>`
+const ButtonContainerDiv = styled.div<{
+  isOpen: boolean;
+  backgroundFocusColour: string;
+  titleBorderFocusColour: string;
+}>`
   & button:focus {
     background: ${({ backgroundFocusColour }) => backgroundFocusColour};
 
     .accordion-button-title {
-      border: 2px solid ${({ titleBorderFocusColour }) => titleBorderFocusColour};
+      border: 2px solid
+        ${({ titleBorderFocusColour }) => titleBorderFocusColour};
     }
   }
 `;
@@ -29,7 +34,9 @@ export const AccordionButton = ({
   backgroundFocusColour = '#E1EDFE',
   titleBorderFocusColour = 'blue',
 }: IAccordionButton) => {
-  const { toggleAccordionOpen, isOpen, index, baseId } = useContext(AccordionContext);
+  const { toggleAccordionOpen, isOpen, index, baseId } = useContext(
+    AccordionContext
+  );
   const { setInsideAccordionGroup } = useContext(AccordionGroupContext);
 
   return (
@@ -41,10 +48,9 @@ export const AccordionButton = ({
     >
       {React.cloneElement(children, {
         onClick: () => {
-          isOpen ?
-            onCloseClick && onCloseClick()
-            :
-            onOpenClick && onOpenClick();
+          isOpen
+            ? onCloseClick && onCloseClick()
+            : onOpenClick && onOpenClick();
           toggleAccordionOpen();
         },
         onFocus: () => setInsideAccordionGroup(true),
@@ -64,14 +70,17 @@ export const AccordionContent = styled.div<{ slideAnimation: string }>`
 `;
 
 interface IAccordionBody {
-  children: React.ReactNode,
+  children: React.ReactNode;
   slideAnimation?: string;
 }
 
-export const AccordionBody = ({ children, slideAnimation = '' }: IAccordionBody) => {
+export const AccordionBody = ({
+  children,
+  slideAnimation = '',
+}: IAccordionBody) => {
   const contentRef = useRef<HTMLDivElement>(null);
   const { isOpen, index, baseId } = useContext(AccordionContext);
-  useToggleFocusableElements(isOpen, contentRef)
+  useToggleFocusableElements(isOpen, contentRef);
 
   return (
     <AccordionContent
@@ -88,8 +97,8 @@ export const AccordionBody = ({ children, slideAnimation = '' }: IAccordionBody)
     >
       {children}
     </AccordionContent>
-  )
-}
+  );
+};
 
 // ** ACCORDION TITLE ** //
 interface IAccordionTitle {
@@ -100,7 +109,7 @@ interface IAccordionTitle {
 const Title = styled.span`
   border-radius: 6px;
   padding: 8px;
-`
+`;
 
 export const AccordionTitle = ({ children }: IAccordionTitle) => {
   const { baseId, index } = useContext(AccordionContext);
@@ -113,6 +122,5 @@ export const AccordionTitle = ({ children }: IAccordionTitle) => {
     >
       {children}
     </Title>
-  )
-}
-
+  );
+};

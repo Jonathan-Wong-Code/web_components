@@ -48,12 +48,6 @@ export const AutoCompleteProvider = ({ options = [], onChange, children, initial
   const [scrollDirection, setScrollDirection] = useState<string>('');
   const [currentHighlightPosition, setHighlightPosition] = useState<number>(1);
 
-  // React.useEffect(() => {
-  //   console.log(currentHighlightPosition)
-
-  // }, [currentHighlightPosition])
-
-
   React.useLayoutEffect(() => {
     const listbox = document.querySelector('.auto-complete-list') as HTMLElement;
     const selectedElement = document.querySelector('.selected') as HTMLElement;
