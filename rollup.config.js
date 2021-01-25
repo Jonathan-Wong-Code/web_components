@@ -5,20 +5,23 @@ import typescript from 'rollup-plugin-typescript2';
 
 const packageJson = require('./package.json');
 
-const config = {
+export default {
   input: 'src/index.ts',
   output: [
     {
+      // dir: 'lib',
       file: packageJson.main,
       format: 'cjs',
-      sourcemap: true,
+      sourcemap: false,
     },
     {
+      // dir: 'lib',
       file: packageJson.module,
       format: 'esm',
-      sourcemap: true,
+      sourcemap: false,
     },
   ],
+  // preserveModules: true,
   plugins: [
     peerDepsExternal(),
     resolve(),
@@ -26,5 +29,3 @@ const config = {
     typescript({ useTsconfigDeclarationDir: true }),
   ],
 };
-
-export default config;
