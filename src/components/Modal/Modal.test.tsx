@@ -8,7 +8,10 @@ interface IDefaultModal {
   centerContent?: boolean;
 }
 
-export const DefaultModal = ({ overlayColor, centerContent }: IDefaultModal): JSX.Element => {
+export const DefaultModal = ({
+  overlayColor,
+  centerContent,
+}: IDefaultModal): JSX.Element => {
   const [open, setIsOpen] = React.useState(false);
 
   const openModal = () => setIsOpen(true);
@@ -33,40 +36,37 @@ export const DefaultModal = ({ overlayColor, centerContent }: IDefaultModal): JS
   );
 };
 
-
 describe('<Modal />', () => {
   it('renders', () => {
-    render(<DefaultModal />)
-  })
+    render(<DefaultModal />);
+  });
 
   it('opens the modal and closes it when you click the overlay', () => {
-    render(<DefaultModal />)
+    render(<DefaultModal />);
     userEvent.click(screen.getByRole('button', { name: /open me!/i }));
-    const modalOverlay = screen.getByTestId('modal-overlay')
+    const modalOverlay = screen.getByTestId('modal-overlay');
     expect(modalOverlay).toBeInTheDocument();
     userEvent.click(modalOverlay);
     expect(screen.queryByTestId('modal-overlay')).not.toBeInTheDocument();
-  })
+  });
 
   it('renders the default styles', () => {
-    render(<DefaultModal />)
+    render(<DefaultModal />);
     userEvent.click(screen.getByRole('button', { name: /open me!/i }));
-    const modalOverlay = screen.getByTestId('modal-overlay')
+    const modalOverlay = screen.getByTestId('modal-overlay');
 
     expect(modalOverlay).toHaveStyleRule('background', 'transparent');
     expect(modalOverlay).toHaveStyleRule('display', 'block');
-  })
+  });
 
   it('renders the centered content and background', () => {
-    render(<DefaultModal centerContent overlayColor='#fff' />)
+    render(<DefaultModal centerContent overlayColor="#fff" />);
     userEvent.click(screen.getByRole('button', { name: /open me!/i }));
-    const modalOverlay = screen.getByTestId('modal-overlay')
+    const modalOverlay = screen.getByTestId('modal-overlay');
 
     expect(modalOverlay).toHaveStyleRule('background', '#fff');
     expect(modalOverlay).toHaveStyleRule('display', 'flex');
     expect(modalOverlay).toHaveStyleRule('justify-content', 'center');
     expect(modalOverlay).toHaveStyleRule('align-items', 'center');
-
-
-  })
-})
+  });
+});

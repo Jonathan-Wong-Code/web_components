@@ -15,7 +15,9 @@ export const Dialog = ({ children, onClose, isOpen }: IDialog): JSX.Element => {
   const onCloseRef = useRef<() => void>(null);
 
   // Memoize the incoming callback function
-  (onCloseRef as React.MutableRefObject<(() => void) | undefined>).current = onClose;
+  (onCloseRef as React.MutableRefObject<
+    (() => void) | undefined
+  >).current = onClose;
 
   const closeDialog = React.useCallback(() => {
     onCloseRef.current && onCloseRef.current();
@@ -106,9 +108,9 @@ export const Dialog = ({ children, onClose, isOpen }: IDialog): JSX.Element => {
 
   return (
     <div
-      className='fieldstone-dialog-container'
-      data-testid='fieldstone-dialog'
-      role='dialog'
+      className="fieldstone-dialog-container"
+      data-testid="fieldstone-dialog"
+      role="dialog"
       aria-modal={isOpen}
       aria-hidden={!isOpen}
       ref={nodeRef}

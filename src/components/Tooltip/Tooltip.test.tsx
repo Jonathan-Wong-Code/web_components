@@ -5,7 +5,7 @@ import Tooltip from './Tooltip';
 import userEvent from '@testing-library/user-event';
 
 beforeEach(() => jest.clearAllMocks());
-const tooltipContent = <p>This is tooltip content</p>
+const tooltipContent = <p>This is tooltip content</p>;
 
 describe('<Tooltip />', () => {
   it('renders the tooltip when the tooltip child is hovered and closes on mouseout', () => {
@@ -20,7 +20,9 @@ describe('<Tooltip />', () => {
     expect(screen.getByText('This is tooltip content')).toBeInTheDocument();
 
     fireEvent.mouseLeave(button);
-    expect(screen.queryByText('This is tooltip content')).not.toBeInTheDocument();
+    expect(
+      screen.queryByText('This is tooltip content')
+    ).not.toBeInTheDocument();
   });
 
   it('renders the tooltip when hovered over and closes when escape is pressed', () => {
@@ -35,7 +37,9 @@ describe('<Tooltip />', () => {
     expect(screen.getByText('This is tooltip content')).toBeInTheDocument();
 
     userEvent.type(container, '{esc}');
-    expect(screen.queryByText('This is tooltip content')).not.toBeInTheDocument();
+    expect(
+      screen.queryByText('This is tooltip content')
+    ).not.toBeInTheDocument();
   });
 
   it('renders the tool tip when it is given keyboard focus and closes on blur', () => {
@@ -54,12 +58,14 @@ describe('<Tooltip />', () => {
 
     //@ts-ignore
     userEvent.tab();
-    expect(screen.queryByText('This is tooltip content')).not.toBeInTheDocument();
+    expect(
+      screen.queryByText('This is tooltip content')
+    ).not.toBeInTheDocument();
   });
 
   it('should render with the above styles', () => {
     render(
-      <Tooltip preferredPosition='above' tooltipContent={<p>hello</p>}>
+      <Tooltip preferredPosition="above" tooltipContent={<p>hello</p>}>
         <button>Hover over me</button>
       </Tooltip>
     );
@@ -69,12 +75,11 @@ describe('<Tooltip />', () => {
     const tooltipContent = screen.getByTestId('tooltip-content-container');
     expect(tooltipContent).toHaveStyleRule('transform', 'translateY(-100%)');
     expect(tooltipContent).toHaveStyleRule('padding-bottom', '8px');
-
   });
 
   it('should render with the below styles', () => {
     render(
-      <Tooltip preferredPosition='below' tooltipContent={<p>hello</p>}>
+      <Tooltip preferredPosition="below" tooltipContent={<p>hello</p>}>
         <button>Hover over me</button>
       </Tooltip>
     );
@@ -82,14 +87,16 @@ describe('<Tooltip />', () => {
     fireEvent.mouseOver(button);
 
     const tooltipContent = screen.getByTestId('tooltip-content-container');
-    expect(tooltipContent).not.toHaveStyleRule('transform', 'translateY(-100%)');
+    expect(tooltipContent).not.toHaveStyleRule(
+      'transform',
+      'translateY(-100%)'
+    );
     expect(tooltipContent).toHaveStyleRule('padding-top', '8px');
-
   });
 
   it('should render with the right direction styles', () => {
     render(
-      <Tooltip preferredPosition='right' tooltipContent={<p>hello</p>}>
+      <Tooltip preferredPosition="right" tooltipContent={<p>hello</p>}>
         <button>Hover over me</button>
       </Tooltip>
     );
@@ -102,7 +109,7 @@ describe('<Tooltip />', () => {
 
   it('should render with the left direction styles', () => {
     render(
-      <Tooltip preferredPosition='left' tooltipContent={<p>hello</p>}>
+      <Tooltip preferredPosition="left" tooltipContent={<p>hello</p>}>
         <button>Hover over me</button>
       </Tooltip>
     );

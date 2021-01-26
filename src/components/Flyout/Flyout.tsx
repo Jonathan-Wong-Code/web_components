@@ -1,14 +1,12 @@
 import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
-import {
-  Dialog,
-} from '../Dialog/Dialog';
+import { Dialog } from '../Dialog/Dialog';
 
 export interface IFlyoutSlider {
   children: React.ReactNode;
-  isOpen: boolean,
-  onClose: () => void,
+  isOpen: boolean;
+  onClose: () => void;
   slideFrom?: 'left' | 'right';
   transitionAnimation: string;
   shadowSizeOffset?: number;
@@ -16,7 +14,11 @@ export interface IFlyoutSlider {
 
 type SlideFrom = 'left' | 'right';
 
-const getSlidePosition = (isOpen: boolean, slideFrom?: SlideFrom, shadowSizeOffset?: number) => {
+const getSlidePosition = (
+  isOpen: boolean,
+  slideFrom?: SlideFrom,
+  shadowSizeOffset?: number
+) => {
   if (slideFrom === 'right') {
     return `right: ${isOpen ? '0' : `calc(-100vw - ${shadowSizeOffset}px)`};`;
   }
@@ -34,7 +36,8 @@ const FlyoutSlideContainer = styled.div<{
   position: fixed;
   top: 0;
   max-width: 100%;
-  ${({ isOpen, slideFrom, shadowSizeOffset }) => getSlidePosition(isOpen, slideFrom, shadowSizeOffset)}
+  ${({ isOpen, slideFrom, shadowSizeOffset }) =>
+    getSlidePosition(isOpen, slideFrom, shadowSizeOffset)}
   transition: ${({ transitionAnimation }) => transitionAnimation};
   z-index: 500;
 
@@ -51,13 +54,11 @@ export const FlyoutSlider = ({
   transitionAnimation,
   shadowSizeOffset,
 }: IFlyoutSlider): JSX.Element => {
-
   const flyoutRef = useRef<HTMLDivElement>(null);
   // // Close Flyout by clicking outside of it.
   useEffect(() => {
     const handleCloseFlyout = (e: MouseEvent) => {
-
-      if (!flyoutRef?.current?.contains((e.target as HTMLElement))) {
+      if (!flyoutRef?.current?.contains(e.target as HTMLElement)) {
         onClose();
       }
     };
@@ -65,7 +66,7 @@ export const FlyoutSlider = ({
     if (isOpen) {
       setTimeout(() => {
         window.addEventListener('click', handleCloseFlyout);
-      }, 0)
+      }, 0);
     }
 
     return () => {
@@ -79,7 +80,7 @@ export const FlyoutSlider = ({
     <FlyoutSlideContainer
       isOpen={isOpen}
       slideFrom={slideFrom}
-      data-testid='flyout-slide-container'
+      data-testid="flyout-slide-container"
       transitionAnimation={transitionAnimation}
       shadowSizeOffset={shadowSizeOffset}
       ref={flyoutRef}
@@ -92,7 +93,7 @@ export const FlyoutSlider = ({
 // *** FLYOUT COMPOSED COMPONENT *** //
 export interface IFlyout {
   children: React.ReactNode;
-  isOpen: boolean,
+  isOpen: boolean;
   onClose: () => void;
   slideFrom?: SlideFrom;
   transitionAnimation?: string;
@@ -107,7 +108,6 @@ export const Flyout = ({
   transitionAnimation = '.2s all linear',
   shadowSizeOffset = 0,
 }: IFlyout): JSX.Element => {
-
   return (
     <Dialog isOpen={isOpen} onClose={onClose}>
       <FlyoutSlider

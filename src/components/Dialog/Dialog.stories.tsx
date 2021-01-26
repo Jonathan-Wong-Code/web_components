@@ -25,14 +25,14 @@ export const Default = (): JSX.Element => {
         }}
         isOpen={open}
       >
-        {open &&
+        {open && (
           <>
             <div>I am the dialog content</div>
             <button onClick={closeDialog}>close me</button>
             <button>button 2</button>
             <button>button 2</button>
           </>
-        }
+        )}
       </Dialog>
     </>
   );

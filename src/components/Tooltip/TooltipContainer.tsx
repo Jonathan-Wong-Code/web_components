@@ -1,4 +1,10 @@
-import React, { useState, useCallback, createContext, useContext, useMemo } from 'react';
+import React, {
+  useState,
+  useCallback,
+  createContext,
+  useContext,
+  useMemo,
+} from 'react';
 import { useCloseOnEscape } from '../../hooks/useCloseOnEscape/useCloseOnEscape';
 import { Coords } from './types';
 
@@ -9,7 +15,7 @@ interface ITooltipContext {
   openTooltip: () => void;
   closeTooltip: () => void;
   setCoords: (coords: Coords) => void;
-  coords: Coords,
+  coords: Coords;
 }
 
 const TooltipContext = createContext<ITooltipContext>({
@@ -22,7 +28,7 @@ const TooltipContext = createContext<ITooltipContext>({
   },
   setCoords: () => null,
   openTooltip: () => null,
-  closeTooltip: () => null
+  closeTooltip: () => null,
 });
 
 export const useTooltip = (): ITooltipContext => {
@@ -39,7 +45,9 @@ interface ITooltipContainer {
   children: React.ReactElement;
 }
 
-export const TooltipContainer = ({ children }: ITooltipContainer): JSX.Element => {
+export const TooltipContainer = ({
+  children,
+}: ITooltipContainer): JSX.Element => {
   const [showTooltip, setShowTooltip] = useState(false);
   const [coords, setCoords] = useState<Coords>({
     top: 0,
@@ -50,17 +58,17 @@ export const TooltipContainer = ({ children }: ITooltipContainer): JSX.Element =
 
   const openTooltip = useCallback(() => setShowTooltip(true), []);
   const closeTooltip = useCallback(() => setShowTooltip(false), []);
-  const showTooltipValue = useMemo(() => showTooltip, [showTooltip])
+  const showTooltipValue = useMemo(() => showTooltip, [showTooltip]);
 
   useCloseOnEscape(showTooltipValue, closeTooltip);
 
-  const value = useMemo(() =>
-    ({ showTooltip, openTooltip, closeTooltip, coords, setCoords }), [showTooltip, closeTooltip, openTooltip, coords]);
+  const value = useMemo(
+    () => ({ showTooltip, openTooltip, closeTooltip, coords, setCoords }),
+    [showTooltip, closeTooltip, openTooltip, coords]
+  );
 
   return (
-    <TooltipContext.Provider value={value}>
-      {children}
-    </TooltipContext.Provider>
+    <TooltipContext.Provider value={value}>{children}</TooltipContext.Provider>
   );
 };
 

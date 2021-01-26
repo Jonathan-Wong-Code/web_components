@@ -25,6 +25,7 @@ interface IAutoCompleteContext {
   numVisibleItems: number;
 }
 
+/* eslint-disable */
 const AutoCompleteContext = createContext<IAutoCompleteContext>({
   handleInputChange: (e: React.ChangeEvent) => {},
   isFocused: false,

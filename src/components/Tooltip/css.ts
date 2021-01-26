@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Position, Coords, Number } from './types';
+import { Position, Coords } from './types';
 
 export const Container = styled.div<{ preferredPosition: Position }>`
   position: relative;
@@ -10,8 +10,8 @@ export const Container = styled.div<{ preferredPosition: Position }>`
 
 const getContentPosition = (
   coords: Coords,
-  contentWidth: Number,
-  tooltipLabelWidth: Number,
+  contentWidth: number | undefined,
+  tooltipLabelWidth: number | undefined,
   preferredPosition?: Position
 ): string => {
   // Above
@@ -48,7 +48,7 @@ export const Content = styled.div<{
   preferredPosition?: Position;
   coords: Coords;
   contentWidth: number | undefined;
-  tooltipLabelWidth: Number;
+  tooltipLabelWidth: number | undefined;
 }>`
 
   *, & * {

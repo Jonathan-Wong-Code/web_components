@@ -1,9 +1,11 @@
 import { useEffect } from 'react';
 import { FOCUSABLE_ELEMENT_SELECTORS } from '../../utils/constants';
 
-const useToggleFocusableElements = (isOpen: boolean, parentElementRef: React.RefObject<HTMLDivElement>) => {
+const useToggleFocusableElements = (
+  isOpen: boolean,
+  parentElementRef: React.RefObject<HTMLDivElement>
+): void => {
   useEffect(() => {
-
     const parentElement = parentElementRef.current;
 
     if (!isOpen) {
@@ -30,7 +32,7 @@ const useToggleFocusableElements = (isOpen: boolean, parentElementRef: React.Ref
         );
       }
     }
-  }, [isOpen, parentElementRef])
-}
+  }, [isOpen, parentElementRef]);
+};
 
 export default useToggleFocusableElements;

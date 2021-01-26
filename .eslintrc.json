@@ -1,0 +1,86 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "es6": true,
+    "jest": true
+  },
+  "globals": {
+    "require": true,
+    "module": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:jsx-a11y/recommended",
+    "plugin:prettier/recommended",
+    "prettier/@typescript-eslint",
+    "prettier"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 12,
+    "sourceType": "module"
+  },
+  "plugins": [
+    "react",
+    "@typescript-eslint",
+    "react-hooks",
+    "jsx-a11y",
+    "prettier"
+  ],
+  "settings": {
+    "react": {
+      "version": "17.0.1"
+    }
+  },
+  "rules": {
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "^_"
+      }
+    ],
+    "@typescript-eslint/ban-ts-comment": "off",
+    "@typescript-eslint/ban-ts-ignore": "off",
+    "indent": "off",
+    "linebreak-style": ["error", "unix"],
+    "no-unused-vars": "off",
+    "quotes": ["error", "single"],
+    "semi": ["error", "always"],
+    "object-curly-spacing": ["error", "always"],
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "react/jsx-tag-spacing": [
+      "error",
+      {
+        "closingSlash": "never",
+        "beforeSelfClosing": "always",
+        "afterOpening": "never",
+        "beforeClosing": "never"
+      }
+    ],
+    "ignorePatterns": [0, "storybook-static/**"],
+    "comma-dangle": ["off", "never"],
+    "jsx-a11y/alt-text": 2,
+    "jsx-a11y/aria-props": 2,
+    "jsx-a11y/mouse-events-have-key-events": 2,
+    "jsx-a11y/no-autofocus": 2,
+    "jsx-a11y/html-has-lang": 2,
+    "jsx-a11y/role-has-required-aria-props": 2,
+    "jsx-a11y/role-supports-aria-props": 2,
+    "jsx-a11y/href-no-hash": "off",
+    "jsx-a11y/label-has-associated-control": [
+      2,
+      { "controlComponents": ["Input"] }
+    ],
+    "consistent-return": 0,
+    "no-console": 1,
+    "prettier/prettier": 2,
+    "jsx-a11y/anchor-is-valid": 0
+  }
+}

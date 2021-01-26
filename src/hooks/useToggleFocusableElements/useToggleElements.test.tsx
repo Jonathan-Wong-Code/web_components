@@ -18,27 +18,31 @@ const Component = () => {
       </div>
       <button onClick={() => setIsOpen(true)}>open button two</button>
     </>
-  )
-}
+  );
+};
 
-describe("The useToggleFocusableElements hook behviour", () => {
+describe('The useToggleFocusableElements hook behviour', () => {
   it('renders and turns off tabbing when the content is not shown', () => {
     render(<Component />);
 
     userEvent.tab();
-    expect(screen.getByRole('button', { name: 'open first button' })).toHaveFocus();
+    expect(
+      screen.getByRole('button', { name: 'open first button' })
+    ).toHaveFocus();
     userEvent.tab();
 
     // Focus should skip the inner button and go to button two
-    expect(screen.getByRole('button', { name: 'open button two' })).toHaveFocus();
+    expect(
+      screen.getByRole('button', { name: 'open button two' })
+    ).toHaveFocus();
     // Click open button
-    userEvent.click(screen.getByRole('button', { name: 'open first button' }))
-    expect(screen.getByRole('button', { name: 'open first button' })).toHaveFocus();
+    userEvent.click(screen.getByRole('button', { name: 'open first button' }));
+    expect(
+      screen.getByRole('button', { name: 'open first button' })
+    ).toHaveFocus();
 
     // tab again when open and inner button should receive focus.
     userEvent.tab();
     expect(screen.getByRole('button', { name: 'inner button' })).toHaveFocus();
-
-  })
-})
-
+  });
+});

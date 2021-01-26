@@ -12,7 +12,7 @@ const InnerFlyout = styled.div`
   font-size: 16px;
   padding: 16px;
   line-height: 1.4;
-  box-shadow: 5px 5px 100px rgba(0,0,0,.5);
+  box-shadow: 5px 5px 100px rgba(0, 0, 0, 0.5);
 
   @media (min-width: 768px) {
     width: 500px;
@@ -31,26 +31,35 @@ const FlyInFromLeft: Story<IFlyout> = () => {
     setIsOpen(true);
   };
 
-  const closeFlyout = () =>{ 
-    action('closing flyout')(); 
+  const closeFlyout = () => {
+    action('closing flyout')();
     setIsOpen(false);
   };
 
   return (
-     // IMPORTANT. Use e.stopPropagation to prevent click event from bubbling up and closing the flyout
+    // IMPORTANT. Use e.stopPropagation to prevent click event from bubbling up and closing the flyout
     <>
       <button onClick={openFlyout}>open me</button>
       <Flyout
         isOpen={isOpen}
         onClose={() => closeFlyout()}
-        slideFrom='left'
+        slideFrom="left"
         shadowSizeOffset={100}
       >
         <InnerFlyout>
           <h2>Innerflyout</h2>
           <p> Use the slideFrom prop to tell it which side to side in from.</p>
-          <p> It can take a custom transition animation to control how the flyout comes out defaults to: .3s all ease</p>
-          <p> If you are using a box-shadow, use the shadowSizeOffset prop so that the flyout can properly take it into account when offsetting itself off of the screen.</p>
+          <p>
+            {' '}
+            It can take a custom transition animation to control how the flyout
+            comes out defaults to: .3s all ease
+          </p>
+          <p>
+            {' '}
+            If you are using a box-shadow, use the shadowSizeOffset prop so that
+            the flyout can properly take it into account when offsetting itself
+            off of the screen.
+          </p>
           <button onClick={closeFlyout}>Close me</button>
         </InnerFlyout>
       </Flyout>
@@ -71,22 +80,31 @@ const FlyInFromRight: Story<IFlyout> = () => {
     setIsOpen(false);
   };
 
-  return ( 
+  return (
     // IMPORTANT. Use e.stopPropagation to prevent click event from bubbling up and closing the flyout
     <>
       <button onClick={openFlyout}>open me</button>
       <Flyout
         isOpen={isOpen}
         onClose={closeFlyout}
-        slideFrom='right'
-        transitionAnimation='all .2s linear'
+        slideFrom="right"
+        transitionAnimation="all .2s linear"
         shadowSizeOffset={100}
       >
         <InnerFlyout>
           <h2>Innerflyout</h2>
           <p> Use the slideFrom prop to tell it which side to side in from.</p>
-          <p> It can take a custom transition animation to control how the flyout comes out defaults to: .3s all ease</p>
-          <p> If you are using a box-shadow, use the shadowSizeOffset prop so that the flyout can properly take it into account when offsetting itself off of the screen.</p>
+          <p>
+            {' '}
+            It can take a custom transition animation to control how the flyout
+            comes out defaults to: .3s all ease
+          </p>
+          <p>
+            {' '}
+            If you are using a box-shadow, use the shadowSizeOffset prop so that
+            the flyout can properly take it into account when offsetting itself
+            off of the screen.
+          </p>
           <button onClick={closeFlyout}>Close me</button>
         </InnerFlyout>
       </Flyout>
@@ -95,5 +113,3 @@ const FlyInFromRight: Story<IFlyout> = () => {
 };
 
 export const FlyingInFromRight = FlyInFromRight.bind({});
-
-

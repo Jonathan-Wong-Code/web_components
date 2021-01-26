@@ -7,7 +7,7 @@ interface IPortal {
 
 const Portal = ({ children, portalId }: IPortal): JSX.Element => {
   const existingPortalDiv = document.getElementById(portalId);
-  
+
   if (existingPortalDiv) {
     return createPortal(children, existingPortalDiv as HTMLDivElement);
   }

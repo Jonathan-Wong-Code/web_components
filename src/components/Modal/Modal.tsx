@@ -7,8 +7,7 @@ const OuterModal = styled.div<{
   centerContent?: boolean;
 }>`
   position: fixed;
-  background: ${({ overlayColor }) =>
-    overlayColor || 'transparent'};
+  background: ${({ overlayColor }) => overlayColor || 'transparent'};
   top: 0;
   left: 0;
   right: 0;
@@ -33,22 +32,21 @@ export const ModalBackground = ({
   centerContent,
   onClose,
 }: IModalBackground): JSX.Element | null => {
-
   const overlayRef = useRef<HTMLDivElement>(null);
 
   return (
     <OuterModal
       ref={overlayRef}
       onClick={(e) =>
-        (e.target as HTMLElement).contains(overlayRef.current) &&
-        onClose()
+        (e.target as HTMLElement).contains(overlayRef.current) && onClose()
       }
       overlayColor={overlayColor}
       centerContent={centerContent}
-      data-testid='modal-overlay'
+      data-testid="modal-overlay"
     >
       {children}
-    </OuterModal>)
+    </OuterModal>
+  );
 };
 
 export interface IModal {
@@ -59,18 +57,24 @@ export interface IModal {
   centerContent?: boolean;
 }
 
-export const Modal = ({ children, onClose, isOpen, overlayColor, centerContent }: IModal) => {
+export const Modal = ({
+  children,
+  onClose,
+  isOpen,
+  overlayColor,
+  centerContent,
+}: IModal): JSX.Element => {
   return (
     <Dialog onClose={onClose} isOpen={isOpen}>
-      {isOpen ?
+      {isOpen ? (
         <ModalBackground
           centerContent={centerContent}
           onClose={onClose}
           overlayColor={overlayColor}
         >
           {children}
-        </ModalBackground> : null
-      }
+        </ModalBackground>
+      ) : null}
     </Dialog>
-  )
-}
+  );
+};

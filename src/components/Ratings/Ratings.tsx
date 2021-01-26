@@ -9,7 +9,7 @@ const Button = styled.button`
   padding: 0;
   margin-right: 4px;
   cursor: pointer;
-`
+`;
 
 interface IStars {
   setRating?: (rating: number) => void;
@@ -20,14 +20,20 @@ interface IStars {
   totalRating: number;
 }
 
-export const Ratings = ({ rating, setRating, FilledIcon, UnfilledIcon, isChangeable, totalRating }: IStars) => {
-
+export const Ratings = ({
+  rating,
+  setRating,
+  FilledIcon,
+  UnfilledIcon,
+  isChangeable,
+  totalRating,
+}: IStars): JSX.Element => {
   // Render each filled icon as a button if rating is changeable, else render icon.
   const getFilledIcon = (i: number) =>
     isChangeable && setRating ? (
       <Button
         onClick={() => setRating(i + 1)}
-        data-testid={`filled-icon-changeable`}
+        data-testid="filled-icon-changeable"
         key={`filled-icon-${i}`}
       >
         <ScreenReaderText>
@@ -36,17 +42,17 @@ export const Ratings = ({ rating, setRating, FilledIcon, UnfilledIcon, isChangea
         <FilledIcon />
       </Button>
     ) : (
-        <div key={`filled-icon-${i}`} data-testid="filled-icon-read-only">
-          <FilledIcon />
-        </div>
-      );
+      <div key={`filled-icon-${i}`} data-testid="filled-icon-read-only">
+        <FilledIcon />
+      </div>
+    );
 
   // Render each unfilled icon as a button if rating is changeable, else render icon.
   const getUnfilledIcon = (i: number) =>
     isChangeable && setRating ? (
       <Button
         onClick={() => setRating(rating + i + 1)}
-        data-testid={`unfilled-icon-changeable`}
+        data-testid="unfilled-icon-changeable"
         key={`unfilled-icon-${i}`}
       >
         <ScreenReaderText>
@@ -55,10 +61,10 @@ export const Ratings = ({ rating, setRating, FilledIcon, UnfilledIcon, isChangea
         <UnfilledIcon />
       </Button>
     ) : (
-        <div key={`unfilled-icon-${i}`} data-testid="unfilled-icon-read-only">
-          <UnfilledIcon />
-        </div>
-      );
+      <div key={`unfilled-icon-${i}`} data-testid="unfilled-icon-read-only">
+        <UnfilledIcon />
+      </div>
+    );
 
   // Gets the correct number of filled icons and renders them.
   const renderFilledIcons = () => {
@@ -67,7 +73,7 @@ export const Ratings = ({ rating, setRating, FilledIcon, UnfilledIcon, isChangea
       stars.push(getFilledIcon(i));
     }
 
-    return stars.map(star => star);
+    return stars.map((star) => star);
   };
 
   // Gets the correct number of unfilled icons and renders them.
@@ -80,7 +86,7 @@ export const Ratings = ({ rating, setRating, FilledIcon, UnfilledIcon, isChangea
       stars.push(getUnfilledIcon(i));
     }
 
-    return stars.map(star => star);
+    return stars.map((star) => star);
   };
 
   return (

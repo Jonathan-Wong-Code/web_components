@@ -1,14 +1,18 @@
 import { useState, useEffect, useRef } from 'react';
 
-export const useLocalStorage = (key: string, defaultValue: any) => {
+/* eslint-disable */
+export const useLocalStorage = (
+  key: string,
+  defaultValue: any
+): JSX.Element => {
   const [state, setState] = useState<any>(() => {
     const valueInStorage = window.localStorage.getItem(key);
     if (valueInStorage) {
-      return JSON.parse(valueInStorage)
+      return JSON.parse(valueInStorage);
     }
     // if default value is a function in case expensive, call it
-    return typeof defaultValue === 'function' ? defaultValue() : defaultValue
-  })
+    return typeof defaultValue === 'function' ? defaultValue() : defaultValue;
+  });
 
   const prevKeyRef = useRef(key);
 
@@ -23,5 +27,6 @@ export const useLocalStorage = (key: string, defaultValue: any) => {
     window.localStorage.setItem(key, JSON.stringify(state));
   }, [key, state]);
 
+  //@ts-ignore
   return [state, setState];
-}
+};

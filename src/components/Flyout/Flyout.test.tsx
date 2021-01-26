@@ -5,7 +5,7 @@ import { Flyout } from './Flyout';
 
 beforeEach(() => jest.clearAllMocks());
 
-const mockOnClose = jest.fn()
+const mockOnClose = jest.fn();
 
 const MockFlyOut = ({ onClose }: { onClose: () => void }) => {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -14,25 +14,17 @@ const MockFlyOut = ({ onClose }: { onClose: () => void }) => {
     <>
       <button>Outside button</button>
       <button onClick={() => setIsOpen(true)}>open me</button>
-      <Flyout
-        isOpen={isOpen}
-        onClose={onClose}
-        slideFrom='left'
-      >
+      <Flyout isOpen={isOpen} onClose={onClose} slideFrom="left">
         <h2>Mock Flyout</h2>
       </Flyout>
     </>
-  )
-}
+  );
+};
 
 describe('<Flyout />', () => {
   it('renders the default open flyout', () => {
     render(
-      <Flyout
-        isOpen
-        onClose={jest.fn()}
-        slideFrom='left'
-      >
+      <Flyout isOpen onClose={jest.fn()} slideFrom="left">
         <h2>Mock Flyout</h2>
       </Flyout>
     );
@@ -45,11 +37,7 @@ describe('<Flyout />', () => {
 
   it('renders with default closed styles', () => {
     render(
-      <Flyout
-        isOpen={false}
-        onClose={jest.fn()}
-        slideFrom='left'
-      >
+      <Flyout isOpen={false} onClose={jest.fn()} slideFrom="left">
         <h2>Mock Flyout</h2>
       </Flyout>
     );
@@ -62,15 +50,10 @@ describe('<Flyout />', () => {
 
   it('renders the flyout sliding in from the right', () => {
     render(
-      <Flyout
-        isOpen
-        onClose={jest.fn()}
-        slideFrom='right'
-      >
+      <Flyout isOpen onClose={jest.fn()} slideFrom="right">
         <h2>Mock Flyout</h2>
       </Flyout>
     );
-
 
     expect(screen.getByTestId('flyout-slide-container')).toHaveStyleRule(
       'right',
@@ -83,7 +66,7 @@ describe('<Flyout />', () => {
       <Flyout
         isOpen={false}
         onClose={jest.fn()}
-        slideFrom='right'
+        slideFrom="right"
         shadowSizeOffset={20}
       >
         <h2>Mock Flyout</h2>
@@ -97,18 +80,15 @@ describe('<Flyout />', () => {
   });
 
   it('should close the flyout when you click outside', async () => {
-    render(
-      <MockFlyOut onClose={mockOnClose} />
-    );
+    render(<MockFlyOut onClose={mockOnClose} />);
 
     userEvent.click(screen.getByText(/open me/i));
 
-    const flyout = await waitFor(() => screen.getByTestId('flyout-slide-container'))
+    const flyout = await waitFor(() =>
+      screen.getByTestId('flyout-slide-container')
+    );
 
-    await waitFor(() => expect(flyout).toHaveStyleRule(
-      'left',
-      '0'
-    ));
+    await waitFor(() => expect(flyout).toHaveStyleRule('left', '0'));
 
     fireEvent.click(document);
     expect(mockOnClose).toHaveBeenCalledTimes(1);

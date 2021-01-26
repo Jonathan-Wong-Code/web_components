@@ -24,7 +24,7 @@ export const Default = (): JSX.Element => {
           closeModal();
         }}
         isOpen={open}
-        overlayColor='rgba(0,0,0,.2)'
+        overlayColor="rgba(0,0,0,.2)"
         centerContent
       >
         <div style={{ background: '#fff', padding: '32px' }}>

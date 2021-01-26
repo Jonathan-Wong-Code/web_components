@@ -10,22 +10,21 @@ export interface ITooltip {
   tooltipContent: React.ReactElement;
 }
 
-const ToolTip =
-  ({
-    children,
-    preferredPosition = 'below',
-    tooltipContent
-  }: ITooltip): JSX.Element => {
-    return (
-      <TooltipContainer>
-        <TooltipComponent
-          preferredPosition={preferredPosition}
-          tooltipContent={tooltipContent}
-        >
-          {children}
-        </TooltipComponent>
-      </TooltipContainer>
-    );
-  };
+const ToolTip = ({
+  children,
+  preferredPosition = 'below',
+  tooltipContent,
+}: ITooltip): JSX.Element => {
+  return (
+    <TooltipContainer>
+      <TooltipComponent
+        preferredPosition={preferredPosition}
+        tooltipContent={tooltipContent}
+      >
+        {children}
+      </TooltipComponent>
+    </TooltipContainer>
+  );
+};
 
 export default ToolTip;

@@ -9,13 +9,13 @@ const Form = styled.form`
   display: flex;
   gap: 4px;
 
- & .jw-lib-code-input {
-  padding: 8px;
-  width: 24px;
-  height: 24px;
-  text-align: center;
-  border-radius: 8px;
- }
+  & .jw-lib-code-input {
+    padding: 8px;
+    width: 24px;
+    height: 24px;
+    text-align: center;
+    border-radius: 8px;
+  }
 `;
 
 export default {
@@ -24,13 +24,12 @@ export default {
 } as Meta;
 
 export const Default = (): JSX.Element => {
-
   // Supports navigaion using left + righ arrow keys as well as pasting.
   const [code, setCode] = React.useState('');
 
   React.useEffect(() => {
-    action(code)()
-  }, [code])
+    action(code)();
+  }, [code]);
 
   // Style by using the class name in the css selector.
   //   const Form = styled.form`
@@ -48,11 +47,16 @@ export const Default = (): JSX.Element => {
 
   const onChange = (code: string) => {
     setCode(code);
-  }
+  };
 
   return (
     <Form>
-      <CodeInput size={5} onChange={onChange} defaultValue={12345} placeholder='x' />
+      <CodeInput
+        size={5}
+        onChange={onChange}
+        defaultValue={12345}
+        placeholder="x"
+      />
     </Form>
-  )
-}
+  );
+};
