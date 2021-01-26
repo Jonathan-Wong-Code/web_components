@@ -18,7 +18,7 @@
     "declaration": true,
     "declarationDir": "build"
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "src/setupTests.ts"],
   "exclude": [
     "node_modules",
     "build",

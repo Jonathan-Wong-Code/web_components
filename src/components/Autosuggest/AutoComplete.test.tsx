@@ -83,7 +83,7 @@ describe('The AutoComplete Component', () => {
 
     expect(screen.getByRole('option', { name: 'sheep' })).toHaveStyleRule(
       'background-color',
-      'grey'
+      'transparent'
     );
 
     fireEvent.keyDown(input, {
@@ -93,9 +93,10 @@ describe('The AutoComplete Component', () => {
       charCode: 40,
     });
 
-    expect(
-      screen.getByRole('option', { name: 'sherpa' }) as jest.fn
-    ).toHaveStyleRule('background-color', 'grey');
+    expect(screen.getByRole('option', { name: 'sherpa' })).toHaveStyleRule(
+      'background-color',
+      'transparent'
+    );
 
     fireEvent.keyDown(input, {
       key: 'ArrowUp',
@@ -106,7 +107,7 @@ describe('The AutoComplete Component', () => {
 
     expect(screen.getByRole('option', { name: 'sheep' })).toHaveStyleRule(
       'background-color',
-      'grey'
+      'transparent'
     );
 
     fireEvent.keyDown(input, {
@@ -116,7 +117,7 @@ describe('The AutoComplete Component', () => {
       charCode: 13,
     });
 
-    expect(input).toHaveValue('sheep');
+    expect(input).toHaveValue('sherpa');
     expect(screen.queryAllByRole('option')).toHaveLength(0);
   });
 

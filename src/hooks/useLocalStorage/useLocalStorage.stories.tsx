@@ -8,7 +8,6 @@ export default {
 
 export const UseLocalStorage = (): JSX.Element => {
   //@ts-ignore
-
   const [name, setName] = useLocalStorage('name', '');
 
   return (
