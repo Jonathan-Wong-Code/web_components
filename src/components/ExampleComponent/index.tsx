@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Div = styled.div<{ backgroundColor: string; color: string }>`
-  background-color: blue;
+  background-color: ${({ theme }) => theme.colors.primaryColor};
   color: white;
 
   // This is how we should be using the theme as a prop in styled-components
@@ -16,7 +16,7 @@ export interface IComponent {
   onClick: () => void;
 }
 
-export const Component = ({
+export const TestComponent = ({
   name = 'Jim',
   backgroundColor = 'blue',
   color = 'white',
@@ -27,7 +27,7 @@ export const Component = ({
       <Div
         backgroundColor={backgroundColor}
         color={color}
-        data-testid='component'
+        data-testid="component"
       >
         {name}
       </Div>

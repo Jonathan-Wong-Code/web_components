@@ -1,4 +1,3 @@
-
 import React, {
   createContext,
   useState,
@@ -10,18 +9,18 @@ import React, {
 
 import { AccordionGroupContext } from './AccordionGroupProvider';
 
-
 // ** Accordion Container ** //
 interface Accordion {
   isOpen: boolean;
   toggleAccordionOpen: () => void;
-  index: number | undefined,
-  baseId: string,
+  index: number | undefined;
+  baseId: string;
 }
 
 export const AccordionContext = createContext<Accordion>({
   isOpen: false,
-  toggleAccordionOpen: () => { },
+  /* eslint-disable */
+  toggleAccordionOpen: () => {},
   index: -1,
   baseId: '',
 });
@@ -36,8 +35,10 @@ export const AccordionContainer = ({
   children,
   index,
   baseId,
-}: IAccordionContainer) => {
-  const { setActiveAccordion, activeAccordion, isSingleOpen } = useContext(AccordionGroupContext)
+}: IAccordionContainer): JSX.Element => {
+  const { setActiveAccordion, activeAccordion, isSingleOpen } = useContext(
+    AccordionGroupContext
+  );
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   useEffect(() => {
@@ -55,12 +56,10 @@ export const AccordionContainer = ({
     }
   }, [index, setActiveAccordion, isSingleOpen]);
 
-  const value = useMemo(() => ({ isOpen, toggleAccordionOpen, index, baseId, }), [
-    isOpen,
-    toggleAccordionOpen,
-    index,
-    baseId,
-  ]);
+  const value = useMemo(
+    () => ({ isOpen, toggleAccordionOpen, index, baseId }),
+    [isOpen, toggleAccordionOpen, index, baseId]
+  );
 
   return (
     <AccordionContext.Provider value={value}>

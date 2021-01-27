@@ -33,7 +33,7 @@ export const AccordionButton = ({
   onCloseClick,
   backgroundFocusColour = '#E1EDFE',
   titleBorderFocusColour = 'blue',
-}: IAccordionButton) => {
+}: IAccordionButton): JSX.Element => {
   const { toggleAccordionOpen, isOpen, index, baseId } = useContext(
     AccordionContext
   );
@@ -77,7 +77,7 @@ interface IAccordionBody {
 export const AccordionBody = ({
   children,
   slideAnimation = '',
-}: IAccordionBody) => {
+}: IAccordionBody): JSX.Element => {
   const contentRef = useRef<HTMLDivElement>(null);
   const { isOpen, index, baseId } = useContext(AccordionContext);
   useToggleFocusableElements(isOpen, contentRef);
@@ -91,7 +91,7 @@ export const AccordionBody = ({
       }}
       id={`accordion-body-${baseId}-${index}`}
       aria-labelledby={`accordion-button-${baseId}-${index}`}
-      role='region'
+      role="region"
       aria-hidden={!isOpen}
       slideAnimation={slideAnimation}
     >
@@ -111,14 +111,14 @@ const Title = styled.span`
   padding: 8px;
 `;
 
-export const AccordionTitle = ({ children }: IAccordionTitle) => {
+export const AccordionTitle = ({ children }: IAccordionTitle): JSX.Element => {
   const { baseId, index } = useContext(AccordionContext);
 
   return (
     <Title
       data-testid={`accordion-button-title-${index}`}
       id={`accordion-button-${baseId}-${index}`}
-      className='accordion-button-title'
+      className="accordion-button-title"
     >
       {children}
     </Title>

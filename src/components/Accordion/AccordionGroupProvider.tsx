@@ -30,6 +30,7 @@ interface IAccordionContainerProvider {
   focusBorderColour?: string;
 }
 
+/* eslint-disable */
 export const AccordionGroupContext = createContext({
   activeAccordion: -1,
   setActiveAccordion: (a: number) => {},
@@ -63,7 +64,7 @@ export const AccordionContainerProvider = ({
     <AccordionGroupContainer
       focusBorderColour={focusBorderColour}
       insideAccordionGroup={insideAccordionGroup}
-      data-testid='accordion-group-container'
+      data-testid="accordion-group-container"
     >
       {
         <AccordionGroupContext.Provider value={value}>

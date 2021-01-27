@@ -11,42 +11,47 @@ export default {
 } as Meta;
 
 const Button = styled.button`
-  width: 100%; 
-  background: none; 
+  width: 100%;
+  background: none;
   border: 1px solid black;
   padding: 16px 20px;
   font-size: 16px;
   outline: none;
   cursor: pointer;
-`
+`;
 
-export const DefaultAccordionNoAnimation = () => {
-
+export const DefaultAccordionNoAnimation = (): JSX.Element => {
   // Follows all the WCAG guidelines and suggestions via https://www.w3.org/TR/wai-aria-practices-1.1/examples/accordion/accordion.html. As such feel free to put outline: none on button if you plan on using the border styles.
 
-  const content = [{
-    buttonLabel: 'hello world',
-    title: 'title 1',
-    description: 'This is description 1. Provides a11y styling options as per https://www.w3.org/TR/wai-aria-practices-1.1/examples/accordion/accordion.html',
-    link: 'go to google',
-  }, {
-    buttonLabel: 'hello world 2',
-    title: 'title 2',
-    description: 'This is description 2. Provides a11y styling options as per https://www.w3.org/TR/wai-aria-practices-1.1/examples/accordion/accordion.html',
-    link: 'go to google'
-  }]
+  const content = [
+    {
+      buttonLabel: 'hello world',
+      title: 'title 1',
+      description:
+        'This is description 1. Provides a11y styling options as per https://www.w3.org/TR/wai-aria-practices-1.1/examples/accordion/accordion.html',
+      link: 'go to google',
+    },
+    {
+      buttonLabel: 'hello world 2',
+      title: 'title 2',
+      description:
+        'This is description 2. Provides a11y styling options as per https://www.w3.org/TR/wai-aria-practices-1.1/examples/accordion/accordion.html',
+      link: 'go to google',
+    },
+  ];
 
   return (
     <>
       <AccordionContainerProvider>
         {content.map((content, index) => (
           <div style={{ marginBottom: '16px' }} key={index}>
-            <AccordionContainer index={index} baseId='base-accordion-id'>
-              <AccordionButton onOpenClick={action('open')} onCloseClick={action('close')}>
+            <AccordionContainer index={index} baseId="base-accordion-id">
+              <AccordionButton
+                onOpenClick={action('open')}
+                onCloseClick={action('close')}
+              >
                 <Button>
-                  <AccordionTitle>
-                    {content.buttonLabel}
-                  </AccordionTitle>
+                  <AccordionTitle>{content.buttonLabel}</AccordionTitle>
                 </Button>
               </AccordionButton>
               <AccordionBody>
@@ -61,44 +66,46 @@ export const DefaultAccordionNoAnimation = () => {
         ))}
       </AccordionContainerProvider>
     </>
-  )
-}
+  );
+};
 
-export const SingleOpenedAccordionWithCustomFocusStylesAndAnimation = () => {
-
+export const SingleOpenedAccordionWithCustomFocusStylesAndAnimation = (): JSX.Element => {
   // Follows all the WCAG guidelines and suggestions via https://www.w3.org/TR/wai-aria-practices-1.1/examples/accordion/accordion.html. As such feel free to put outline: none on button if you plan on using the border styles.
 
   // This variant uses custom border focus colors... IF you don't want them set them to transparent however I could discourage doing this as its suggested by the w3.
 
-  const content = [{
-    buttonLabel: 'hello world',
-    title: 'title 1',
-    description: 'This is description 1. Provides a11y styling options as per https://www.w3.org/TR/wai-aria-practices-1.1/examples/accordion/accordion.html'
-  }, {
-    buttonLabel: 'hello world 2',
-    title: 'title 2',
-    description: 'This is description 2. Provides a11y styling options as per https://www.w3.org/TR/wai-aria-practices-1.1/examples/accordion/accordion.html'
-  }]
+  const content = [
+    {
+      buttonLabel: 'hello world',
+      title: 'title 1',
+      description:
+        'This is description 1. Provides a11y styling options as per https://www.w3.org/TR/wai-aria-practices-1.1/examples/accordion/accordion.html',
+    },
+    {
+      buttonLabel: 'hello world 2',
+      title: 'title 2',
+      description:
+        'This is description 2. Provides a11y styling options as per https://www.w3.org/TR/wai-aria-practices-1.1/examples/accordion/accordion.html',
+    },
+  ];
 
   return (
     <>
-      <AccordionContainerProvider isSingleOpen focusBorderColour='red'>
+      <AccordionContainerProvider isSingleOpen focusBorderColour="red">
         {content.map((content, i) => (
-          <AccordionContainer index={i} key={content.title} baseId='unique-id'>
+          <AccordionContainer index={i} key={content.title} baseId="unique-id">
             <AccordionButton
               onOpenClick={action('open')}
               onCloseClick={action('close')}
-              backgroundFocusColour='grey'
-              titleBorderFocusColour='red'
+              backgroundFocusColour="grey"
+              titleBorderFocusColour="red"
             >
               <Button>
-                <AccordionTitle>
-                  {content.buttonLabel}
-                </AccordionTitle>
+                <AccordionTitle>{content.buttonLabel}</AccordionTitle>
               </Button>
             </AccordionButton>
             {/* Pass the transition if you want animations */}
-            <AccordionBody slideAnimation='.2s all ease'>
+            <AccordionBody slideAnimation=".2s all ease">
               <div style={{ background: 'red', padding: '16px' }}>
                 <h1>{content.title}</h1>
                 <p>{content.description}</p>
@@ -108,6 +115,5 @@ export const SingleOpenedAccordionWithCustomFocusStylesAndAnimation = () => {
         ))}
       </AccordionContainerProvider>
     </>
-  )
-}
-
+  );
+};
