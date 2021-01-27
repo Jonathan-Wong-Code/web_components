@@ -1,6 +1,8 @@
 import * as React from 'react';
 
-function SvgPineapple(props: React.SVGProps<SVGSVGElement>): JSX.Element {
+export function SvgPineapple(
+  props: React.SVGProps<SVGSVGElement>
+): JSX.Element {
   return (
     <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" {...props}>
       <path

@@ -2,24 +2,28 @@ import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import typescript from 'rollup-plugin-typescript2';
-
+import multiInput from 'rollup-plugin-multi-input';
 /* eslint-disable  @typescript-eslint/no-var-requires */
-const packageJson = require('./package.json');
+// const packageJson = require('./package.json');
 
 export default {
-  input: 'src/index.ts',
+  input: ['src/index.ts', 'src/components/icons/index.tsx'],
   output: [
     {
       // dir: 'lib',
-      file: packageJson.main,
+      // file: packageJson.main,
       format: 'cjs',
       sourcemap: false,
+      dir: 'build',
+      exports: 'named',
     },
     {
       // dir: 'lib',
-      file: packageJson.module,
+      // file: packageJson.module,
       format: 'esm',
       sourcemap: false,
+      dir: 'build',
+      exports: 'named',
     },
   ],
   // preserveModules: true,
@@ -28,5 +32,6 @@ export default {
     resolve(),
     commonjs(),
     typescript({ useTsconfigDeclarationDir: true }),
+    multiInput(),
   ],
 };
