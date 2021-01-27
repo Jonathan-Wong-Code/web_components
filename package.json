@@ -1,6 +1,6 @@
 {
   "name": "jon-component-library",
-  "version": "0.1.5",
+  "version": "0.2.1",
   "peerDependencies": {
     "react": ">=17.0.1",
     "react-dom": ">=17.0.1"
@@ -48,6 +48,7 @@
     "@storybook/preset-create-react-app": "^3.1.5",
     "@storybook/react": "^6.1.15",
     "@svgr/cli": "^5.5.0",
+    "@svgr/plugin-prettier": "^5.5.0",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.3",
     "@testing-library/user-event": "^12.6.2",
