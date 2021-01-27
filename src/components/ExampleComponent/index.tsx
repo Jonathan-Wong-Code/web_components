@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-
+import Pineapple from '../icons/Pineapple';
 const Div = styled.div<{ backgroundColor: string; color: string }>`
   background-color: ${({ theme }) => theme.colors.primaryColor};
   color: white;
@@ -31,6 +31,7 @@ export const TestComponent = ({
       >
         {name}
       </Div>
+      <Pineapple height={32} />
       <button onClick={onClick}>Click me</button>
     </>
   );
