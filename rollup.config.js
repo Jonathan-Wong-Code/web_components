@@ -10,7 +10,6 @@ export default {
   input: ['src/index.ts', 'src/components/icons/index.tsx'],
   output: [
     {
-      // dir: 'lib',
       // file: packageJson.main,
       format: 'cjs',
       sourcemap: false,
@@ -18,7 +17,6 @@ export default {
       exports: 'named',
     },
     {
-      // dir: 'lib',
       // file: packageJson.module,
       format: 'esm',
       sourcemap: false,
