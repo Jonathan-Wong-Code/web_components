@@ -1,8 +1,8 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { renderBaseProviders } from '../../../test-helpers/testUtils';
 import { TestComponent } from '../';
 
 it('renders the test component', () => {
   const onClick = jest.fn();
-  render(<TestComponent onClick={onClick} />);
+  renderBaseProviders(<TestComponent onClick={onClick} />);
 });
