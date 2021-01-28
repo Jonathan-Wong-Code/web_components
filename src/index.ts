@@ -1,3 +1,3 @@
 import { Modal } from './components/Modal/Modal';
-
-export { Modal };
+import { GlobalStyle } from './styles';
+export { Modal, GlobalStyle };
