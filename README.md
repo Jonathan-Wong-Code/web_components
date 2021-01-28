@@ -1,6 +1,6 @@
-# The Moderna Web Component Library
+# The Web Component Library
 
-The purpose of this library to provide a a repository of re-usable components that will be used across all future Moderna sites and projects.
+The purpose of this library to provide a a repository of re-usable components that will be used across all future sites and projects.
 
 It also provides the theming and design components to be used across future projects as well.
 
@@ -8,7 +8,7 @@ It also provides the theming and design components to be used across future proj
 
 In the project directory, you can run:
 
-### `ynpm start`
+### `npm start`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
