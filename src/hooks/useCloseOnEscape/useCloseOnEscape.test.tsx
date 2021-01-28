@@ -14,6 +14,6 @@ it('runs closeElement when escape is pressed', () => {
   const closeElement = jest.fn();
   const { container } = render(<TestComponent closeElement={closeElement} />);
 
-  userEvent.type(container, '{esc}')
+  userEvent.type(container, '{esc}');
   expect(closeElement).toHaveBeenCalledTimes(1);
 });

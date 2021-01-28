@@ -2,7 +2,7 @@ import { blue, neutral, yellow, red, green } from './colors'; // Primary neutral
 import { primaryFont, typeScale } from './typography';
 import { ThemeInterface } from './styles.d';
 
-export const defaultTheme: ThemeInterface = {
+export const modernaBaseTheme: ThemeInterface = {
   colors: {
     primaryColor: blue[300],
     primaryHoverColor: blue[200],
@@ -32,7 +32,7 @@ export const defaultTheme: ThemeInterface = {
   primaryFont,
 };
 
-export const darkTheme: ThemeInterface = {
+export const modernaDarkTheme: ThemeInterface = {
   colors: {
     primaryColor: neutral[100],
     primaryHoverColor: neutral[200],

@@ -7,15 +7,14 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "rollup -c",
+    "build": "rm -rf build && rollup -c",
     "test": "react-scripts test --watchAll",
     "test:coverage": "react-scripts test --coverage --watchAll=false",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public",
     "prebpublishOnly": "npm run build",
-    "optimize-svg": "svgo --config=.svgo.yml -f ./src/assets/icons",
-    "convert-svg": "npx @svgr/cli -d src/components/icons --ignore-existing src/assets/icons  --typescript"
+    "convert-svg": "svgo --config=.svgo.yml -f ./src/assets/icons && npx @svgr/cli -d src/components/icons --ignore-existing src/assets/icons  --typescript"
   },
   "eslintConfig": {
     "extends": [

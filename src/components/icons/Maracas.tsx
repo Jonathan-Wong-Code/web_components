@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-function SvgMaracas(props: React.SVGProps<SVGSVGElement>): JSX.Element {
+function SvgMaracas(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       viewBox="0 0 512.021 512.021"

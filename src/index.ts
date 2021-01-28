@@ -1,3 +1,4 @@
 import { Modal } from './components/Modal/Modal';
-import { GlobalStyle } from './styles';
-export { Modal, GlobalStyle };
+import { modernaBaseTheme } from '../src/styles/themes';
+
+export { Modal, modernaBaseTheme };
